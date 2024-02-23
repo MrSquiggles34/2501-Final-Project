@@ -1,4 +1,13 @@
 target_sources(${PROJ_NAME}
 	PRIVATE
+		file_utils.h
 		game.h
+		gameobject.h
+		gametexture.h
+		geometry.h
+		playergameobject.h
+		shader.h
+		sprite.h
+		texturemanager.h
+		timer.h
 )

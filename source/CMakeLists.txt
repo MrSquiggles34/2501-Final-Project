@@ -3,3 +3,6 @@ target_sources(${PROJ_NAME}
 		main.cpp
 		game.cpp
 )
+
+add_subdirectory(gameobject)
+add_subdirectory(util)

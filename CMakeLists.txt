@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.18)
 
+# Verbose mode for bugtesting
+# set(VERBOSE true)
+
 # Project name
 set(PROJ_NAME "2501FinalProject")
 project(${PROJ_NAME})
@@ -11,7 +14,7 @@ add_compile_options(-I ${CMAKE_CURRENT_SOURCE_DIR}/header)
 add_executable(${PROJ_NAME} "")
 add_subdirectory(source)
 add_subdirectory(header)
-#add_subdirectory(shader)
+add_subdirectory(shader)
 
 # Add path name to configuration file
 configure_file(path_config.h.in path_config.h)
