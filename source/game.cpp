@@ -107,6 +107,7 @@ namespace game {
 		while(!glfwWindowShouldClose(window_)) {
 			double currTime = glfwGetTime();
 			double delta_time = currTime - prevTime;
+			prevTime = currTime;
 			glfwPollEvents();
 			HandleUserInput();
 			Update(delta_time);
@@ -155,7 +156,7 @@ namespace game {
 			glfwSetWindowShouldClose(window_, true);
 		}
 		
-		float playerSpeed = 0.05f;
+		float playerSpeed = 1.0f;
 		
 		if (glfwGetKey(window_, GLFW_KEY_W) == GLFW_PRESS) {
 			player_->AddRelativeMotion(glm::vec3(playerSpeed, 0.0f, 0.0f));

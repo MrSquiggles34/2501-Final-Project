@@ -5,7 +5,7 @@
 namespace game {
 	PlayerGameObject::PlayerGameObject(const glm::vec3 position, TextureManager *manager, int texture)
 	 : GameObject(position, manager, texture) {
-		movementSpeed_ = 0.1f;
+		movementSpeed_ = 1.0f;
 		direction_ = glm::pi<float>() / 2.0f;
 	}
 }

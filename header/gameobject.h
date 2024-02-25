@@ -1,6 +1,7 @@
 #ifndef GAME_OBJECT_H_
 #define GAME_OBJECT_H_
 
+#include <iostream>
 #include <glm/glm.hpp>
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -23,7 +24,10 @@ namespace game {
 			inline void SetDirection(float direction) { direction_ = direction; RotationModulus(); }
 			
 			inline void AddMotion(const glm::vec3 &delta) { motion_ += delta; }
-			inline void AddRelativeMotion(const glm::vec3 &delta) { motion_ += delta.x * GetHeading() + delta.y * GetRight(); }
+			inline void AddRelativeMotion(const glm::vec3 &delta) {
+				glm::vec3 relativeDelta = delta.x * GetHeading() + delta.y * GetRight();
+				motion_ += relativeDelta;
+			}
 			inline void Rotate(float delta) { direction_ += delta; RotationModulus(); }
 			
 			glm::vec3 GetHeading() const;

@@ -19,7 +19,9 @@ namespace game {
 	
 	void GameObject::Update(double delta_time) {
 		position_ += motion_ * ((float) delta_time) * movementSpeed_;
-		motion_ = glm::vec3(0.0f);
+		motion_.x = 0.0f;
+		motion_.y = 0.0f;
+		motion_.z = 0.0f;
 	}
 	
 	void GameObject::Render(const glm::mat4 &view_matrix) {
