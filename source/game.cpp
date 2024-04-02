@@ -90,7 +90,7 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png"};
+		const char* textures[] = {"player.png", "bullet.png"};
 		
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
