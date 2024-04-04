@@ -12,4 +12,8 @@ target_sources(${PROJ_NAME}
 		timer.h
 		projectilegameobject.h
 		playerbulletgameobject.h
+		enemygameobject.h
+		chaserenemygameobject.h
+		hazardenemygameobject.h
+		shooterenemygameobject.h
 )

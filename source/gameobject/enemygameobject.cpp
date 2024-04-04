@@ -1,3 +1,5 @@
+#define GLM_FORCE_RADIANS
+#include <glm/gtc/matrix_transform.hpp>
 #include "enemygameobject.h"
 
 namespace game {
@@ -6,8 +8,8 @@ namespace game {
 		movementSpeed_ = 1.0f;
 		direction_ = -glm::pi<float>() / 2.0f;
 		
-		SetCollisionMaskIn(GameObject::ENEMY_BODY, true);
-		SetCollisionMaskOut(GameObject::PLAYER_BODY, true);
-		SetCollisionMaskOut(GameObject::PLAYER_BULLET, true);
+		SetCollisionMaskInBit(GameObject::ENEMY_BODY, true);
+		SetCollisionMaskOutBit(GameObject::PLAYER_BODY, true);
+		SetCollisionMaskOutBit(GameObject::PLAYER_BULLET, true);
 	}
 }

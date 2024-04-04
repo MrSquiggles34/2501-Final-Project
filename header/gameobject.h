@@ -51,7 +51,7 @@ namespace game {
 			inline void SetCollisionMaskOutBit(int bit, bool value) { collisionMaskOut_ = SetMaskBit(collisionMaskOut_, bit, value); }
 			inline bool GetCollisionMaskOutBit(int bit) const { return GetMaskBit(collisionMaskOut_, bit); }
 			
-			inline bool CanCollideWith(GameObject* other) { return (collisionMaskOut_ & other->collisionMaskIn_) != 0 };
+			inline bool CanCollideWith(GameObject* other) { return (collisionMaskOut_ & other->collisionMaskIn_) != 0; }
 			virtual bool IsIntersectingWith(GameObject* other);
 			inline bool IsCollidingWith(GameObject* other) { return CanCollideWith(other) && IsIntersectingWith(other); }
 			virtual void OnCollisionWith(GameObject* other); // Outgoing

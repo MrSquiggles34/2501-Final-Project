@@ -29,12 +29,12 @@ namespace game {
 		motion_.z = 0.0f;
 	}
 	
-	bool IsIntersectingWith(GameObject* other) {
+	bool GameObject::IsIntersectingWith(GameObject* other) {
 		return false;
 	}
 	
-	void OnCollisionWith(GameObject* other) {}
-	void WhenCollidedBy(GameObject* other) {}
+	void GameObject::OnCollisionWith(GameObject* other) {}
+	void GameObject::WhenCollidedBy(GameObject* other) {}
 	
 	void GameObject::Render(const glm::mat4 &view_matrix) {
 		if (texture_ == nullptr) return; // Invisible Object
