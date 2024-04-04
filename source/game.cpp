@@ -149,19 +149,22 @@ namespace game {
 		for (int i = 0; i < gameObjects_.size(); i++) {
 			GameObject* currentGameObject = gameObjects_[i];
 
-			/*
-			// Delete expired explosions
-			if (currentGameObject->IsMarkedForDeletion()) {
 
-				delete currentGameObject;
-				gameObjects_.erase(gameObjects_.begin() + i);
-				std::cout << "deleted" << std::endl;
-			}
-			else {
+			for (int i = 0; i < gameObjects_.size(); ) {
+				GameObject* currentGameObject = gameObjects_[i];
+
 				currentGameObject->Update(delta_time);
-				++i;
+
+				// Check if the current game object is marked for deletion, delete
+				if (currentGameObject->IsMarkedForDeletion()) {
+					delete currentGameObject;
+					gameObjects_.erase(gameObjects_.begin() + i); 
+				}
+				else {
+					++i; 
+				}
 			}
-			*/
+			
 		}
 	} // Update
 	
