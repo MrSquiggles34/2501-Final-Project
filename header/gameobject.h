@@ -38,9 +38,38 @@ namespace game {
 			inline void SetMovementSpeed(float speed) { movementSpeed_ = speed; }
 			inline float GetMovementSpeed() const { return movementSpeed_; }
 
+			// Collision
+			inline void SetCollisionMaskIn(long int mask) { collisionMaskIn_ = mask; }
+			inline long int GetCollisionMaskIn() const { return collisionMaskIn_; }
+			
+			inline void SetCollisionMaskInBit(int bit, bool value) { collisionMaskIn_ = SetMaskBit(collisionMaskIn_, bit, value); }
+			inline bool GetCollisionMaskInBit(int bit) const { return GetMaskBit(collisionMaskIn_, bit); }
+			
+			inline void SetCollisionMaskOut(long int mask) { collisionMaskOut_ = mask; }
+			inline long int GetCollisionMaskOut() const { return collisionMaskOut_; }
+			
+			inline void SetCollisionMaskOutBit(int bit, bool value) { collisionMaskOut_ = SetMaskBit(collisionMaskOut_, bit, value); }
+			inline bool GetCollisionMaskOutBit(int bit) const { return GetMaskBit(collisionMaskOut_, bit); }
+			
+			inline bool CanCollideWith(GameObject* other) { return (collisionMaskOut_ & other->collisionMaskIn_) != 0 };
+			virtual bool IsIntersectingWith(GameObject* other);
+			inline bool IsCollidingWith(GameObject* other) { return CanCollideWith(other) && IsIntersectingWith(other); }
+			virtual void OnCollisionWith(GameObject* other); // Outgoing
+			virtual void WhenCollidedBy(GameObject* other);  // Incoming
+			
+			enum CollisionBit {
+				PLAYER_BODY,
+				PLAYER_BULLET,
+				ENEMY_BODY,
+				ENEMY_BODY_HAZARD,
+				ENEMY_BODY_CHASER,
+				ENEMY_BODY_SHOOTER,
+				ENEMY_BULLET
+			};
+			
 			// Deletion
-			void SetMarkedForDeletion(bool marked) { markedForDeletion_ = marked; }
-			bool IsMarkedForDeletion() const { return markedForDeletion_; }
+			inline void SetMarkedForDeletion(bool marked) { markedForDeletion_ = marked; }
+			inline bool IsMarkedForDeletion() const { return markedForDeletion_; }
 
 		protected:
 			// Position & motion stuff
@@ -56,6 +85,15 @@ namespace game {
 			GameTexture *texture_;
 			
 			// Collision detection
+			long int collisionMaskIn_;  // What am I?
+			long int collisionMaskOut_; // What do I affect?
+			
+			inline long int SetMaskBit(long int mask, int bit, bool value) {
+				return (value) ? (mask | (1 << bit)) : (mask & (~(1 << bit)));
+			}
+			inline bool GetMaskBit(long int mask, int bit) const {
+				return (mask & (1 << bit)) != 0;
+			}
 
 			// Deletion
 			bool markedForDeletion_;

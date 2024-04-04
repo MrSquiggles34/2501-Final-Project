@@ -6,7 +6,7 @@
 namespace game {
 	class PlayerGameObject : public GameObject {
 		public:
-			PlayerGameObject(const glm::vec3 position, TextureManager *manager, int texture);
+			PlayerGameObject(const glm::vec3 &position, TextureManager *manager, int texture);
 
 			// Getters
 			double getLastShotTime() { return lastShotTime_; }

@@ -15,7 +15,10 @@ namespace game {
 		texture_ = textureManager_->GetTexture(texture);
 		
 		scale_ = 1.0f;
-
+		
+		collisionMaskIn_ = 0;
+		collisionMaskOut_ = 0;
+		
 		markedForDeletion_ = false;
 	}
 	
@@ -25,6 +28,13 @@ namespace game {
 		motion_.y = 0.0f;
 		motion_.z = 0.0f;
 	}
+	
+	bool IsIntersectingWith(GameObject* other) {
+		return false;
+	}
+	
+	void OnCollisionWith(GameObject* other) {}
+	void WhenCollidedBy(GameObject* other) {}
 	
 	void GameObject::Render(const glm::mat4 &view_matrix) {
 		if (texture_ == nullptr) return; // Invisible Object
