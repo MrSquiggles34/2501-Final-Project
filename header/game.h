@@ -44,7 +44,7 @@ namespace game {
 			GLuint* tex_;
 			
 			std::vector<GameObject*> gameObjects_;
-			GameObject* player_;
+			PlayerGameObject* player_;
 	};
 }
 

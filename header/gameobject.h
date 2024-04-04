@@ -37,6 +37,11 @@ namespace game {
 			
 			inline void SetMovementSpeed(float speed) { movementSpeed_ = speed; }
 			inline float GetMovementSpeed() const { return movementSpeed_; }
+
+			// Deletion
+			void SetMarkedForDeletion(bool marked) { markedForDeletion_ = marked; }
+			bool IsMarkedForDeletion() const { return markedForDeletion_; }
+
 		protected:
 			// Position & motion stuff
 			glm::vec3 position_;
@@ -51,6 +56,9 @@ namespace game {
 			GameTexture *texture_;
 			
 			// Collision detection
+
+			// Deletion
+			bool markedForDeletion_;
 	};
 }
 

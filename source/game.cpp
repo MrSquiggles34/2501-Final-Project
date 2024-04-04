@@ -7,6 +7,7 @@
 #include <path_config.h>
 
 #include "game.h"
+#include "playerbulletgameobject.h"
 
 namespace game {
 	const char *WINDOW_TITLE = "2501 Final Project";
@@ -146,12 +147,27 @@ namespace game {
 		currentTime_ += delta_time;
 		
 		for (int i = 0; i < gameObjects_.size(); i++) {
-			gameObjects_[i]->Update(delta_time);
+			GameObject* currentGameObject = gameObjects_[i];
+
+			/*
+			// Delete expired explosions
+			if (currentGameObject->IsMarkedForDeletion()) {
+
+				delete currentGameObject;
+				gameObjects_.erase(gameObjects_.begin() + i);
+				std::cout << "deleted" << std::endl;
+			}
+			else {
+				currentGameObject->Update(delta_time);
+				++i;
+			}
+			*/
 		}
 	} // Update
 	
 	void Game::HandleUserInput() {
-		
+		GameObject* player = gameObjects_[0];
+
 		if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window_, true);
 		}
@@ -169,6 +185,20 @@ namespace game {
 		}
 		if (glfwGetKey(window_, GLFW_KEY_D) == GLFW_PRESS) {
 			player_->AddRelativeMotion(glm::vec3(0.0f, playerSpeed, 0.0f));
+		}
+		if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS && glfwGetTime() - player_->getLastShotTime() > player_->getShootingCooldown())
+		{
+			std::cout << "fired" << std::endl;
+			glm::vec3 curpos = player->GetPosition();
+			
+			float bulletOffset = 0.5f; // Adjust this value as needed
+			glm::vec3 bulletPosition = curpos + glm::vec3(0.0f, bulletOffset, 0.0f);
+
+			PlayerBulletGameObject* bullet = new PlayerBulletGameObject(bulletPosition, &textureManager_, 1);
+			gameObjects_.insert(gameObjects_.end(), bullet);
+
+			// Update the last shot time
+			player_->setLastShotTime(glfwGetTime());
 		}
 	}
 	

@@ -10,4 +10,6 @@ target_sources(${PROJ_NAME}
 		sprite.h
 		texturemanager.h
 		timer.h
+		projectilegameobject.h
+		playerbulletgameobject.h
 )

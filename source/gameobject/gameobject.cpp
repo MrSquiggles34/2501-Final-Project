@@ -15,6 +15,8 @@ namespace game {
 		texture_ = textureManager_->GetTexture(texture);
 		
 		scale_ = 1.0f;
+
+		markedForDeletion_ = false;
 	}
 	
 	void GameObject::Update(double delta_time) {

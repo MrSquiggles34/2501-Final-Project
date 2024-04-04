@@ -1,17 +1,21 @@
 #ifndef PLAYER_BULLET_GAME_OBJECT_H_
 #define PLAYER_BULLET_GAME_OBJECT_H_
 
-#include "projectile_game_object.h"
+#include "projectilegameobject.h"
 
 namespace game {
     // Inherits from GameObject
-    class PlayerBulletGameObject : public GameObject {
-    
+    class PlayerBulletGameObject : public ProjectileGameObject {
+
         public:
-            PlayerBulletGameObject(const glm::vec3& position, TextureManager* textureManager, int texture);
+            PlayerBulletGameObject(const glm::vec3 position, TextureManager* manager, int texture);
 
             virtual void Update(double delta_time) override;
-    }
+
+        private: 
+            Timer lifespanTimer_;
+
+    };
 }
 
 #endif
