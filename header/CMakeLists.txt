@@ -2,20 +2,22 @@ target_sources(${PROJ_NAME}
 	PRIVATE
 		file_utils.h
 		game.h
-		gameobject.h
+		timer.h
+		particlesystem.h
+		particles.h
 		gametexture.h
 		geometry.h
-		playergameobject.h
 		shader.h
 		sprite.h
 		texturemanager.h
-		timer.h
+		parametricmotion.h
+		linearparametricmotion.h
+		gameobject.h
+		playergameobject.h
+		enemygameobject.h
 		projectilegameobject.h
 		playerbulletgameobject.h
-		enemygameobject.h
 		chaserenemygameobject.h
 		hazardenemygameobject.h
 		shooterenemygameobject.h
-		particlesystem.h
-		particles.h
 )

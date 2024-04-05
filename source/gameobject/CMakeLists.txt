@@ -8,3 +8,4 @@ target_sources(${PROJ_NAME}
 		hazardenemygameobject.cpp
 )
 
+add_subdirectory(controllers)
