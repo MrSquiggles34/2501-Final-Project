@@ -6,5 +6,6 @@ target_sources(${PROJ_NAME}
 		sprite.cpp
 		texturemanager.cpp
 		timer.cpp
+		particlesystem.cpp
 )
 

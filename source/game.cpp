@@ -8,6 +8,7 @@
 
 #include "game.h"
 #include "playerbulletgameobject.h"
+#include "enemygameobject.h"
 
 namespace game {
 	const char *WINDOW_TITLE = "2501 Final Project";
@@ -63,6 +64,8 @@ namespace game {
 		
 		player_ = new PlayerGameObject(glm::vec3(0.0f, 0.0f, 0.0f), &textureManager_, 0);
 		gameObjects_.push_back(player_);
+
+		gameObjects_.push_back(new EnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2));
 	}
 	
 	void Game::SetTexture(GLuint w, const char *fname) {
@@ -91,7 +94,7 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png", "bullet.png"};
+		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png"};
 		
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];

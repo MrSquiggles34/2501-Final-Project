@@ -16,4 +16,5 @@ target_sources(${PROJ_NAME}
 		chaserenemygameobject.h
 		hazardenemygameobject.h
 		shooterenemygameobject.h
+		particlesystem.h
 )
