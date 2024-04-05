@@ -34,7 +34,10 @@ namespace game {
 			double currentTime_;
 			
 			Geometry* sprite_;
+			Geometry* particles_;
+
 			Shader spriteShader_;
+			Shader particle_shader_;
 			
 			GLFWwindow* window_;
 			

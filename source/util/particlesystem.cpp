@@ -6,10 +6,13 @@
 
 namespace game {
 
-ParticleSystem::ParticleSystem(const glm::vec3 &position, Geometry *geom, Shader *shader, GLuint texture, GameObject *parent)
-	: GameObject(position, geom, shader, texture){
+ParticleSystem::ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent)
+	: GameObject(position, textureManager, texture){
 
     parent_ = parent;
+    texture_ = textureManager->GetTexture(texture);
+    shader_ = texture_->getShader();
+    geometry_ = texture_->getGeometry();
 }
 
 
@@ -32,13 +35,13 @@ void ParticleSystem::Render(glm::mat4 view_matrix, double current_time){
     glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(scale_, scale_, 1.0));
 
     // Setup the rotation matrix for the shader
-    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), angle_, glm::vec3(0.0, 0.0, 1.0));
+    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), direction_, glm::vec3(0.0, 0.0, 1.0));
 
     // Set up the translation matrix for the shader
     glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), position_);
 
     // Set up the parent transformation matrix
-    glm::mat4 parent_rotation_matrix = glm::rotate(glm::mat4(1.0f), parent_->GetRotation(), glm::vec3(0.0, 0.0, 1.0));
+    glm::mat4 parent_rotation_matrix = glm::rotate(glm::mat4(1.0f), parent_->GetDirection(), glm::vec3(0.0, 0.0, 1.0));
     glm::mat4 parent_translation_matrix = glm::translate(glm::mat4(1.0f), parent_->GetPosition());
     glm::mat4 parent_transformation_matrix = parent_translation_matrix * parent_rotation_matrix;
 
@@ -55,7 +58,7 @@ void ParticleSystem::Render(glm::mat4 view_matrix, double current_time){
     geometry_->SetGeometry(shader_->GetShaderProgram());
 
     // Bind the particle texture
-    glBindTexture(GL_TEXTURE_2D, texture_);
+    glBindTexture(GL_TEXTURE_2D, texture_->getTexture());
 
     // Draw the entity
     glDrawElements(GL_TRIANGLES, geometry_->GetSize(), GL_UNSIGNED_INT, 0);

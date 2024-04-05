@@ -9,7 +9,7 @@ namespace game {
     class ParticleSystem : public GameObject {
 
         public:
-            ParticleSystem(const glm::vec3 &position, Geometry *geom, Shader *shader, GLuint texture, GameObject *parent);
+            ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent);
 
             void Update(double delta_time) override;
 
@@ -17,6 +17,9 @@ namespace game {
 
         private:
             GameObject *parent_;
+            GameTexture* Texture_;
+            Shader* shader_;
+            Geometry* geometry_;
 
     }; // class ParticleSystem
 

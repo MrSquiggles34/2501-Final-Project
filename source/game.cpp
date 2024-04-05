@@ -10,6 +10,9 @@
 #include "playerbulletgameobject.h"
 #include "enemygameobject.h"
 
+#include "particles.h"
+#include "particlesystem.h"
+
 namespace game {
 	const char *WINDOW_TITLE = "2501 Final Project";
 	const unsigned int WINDOW_WIDTH = 800;
@@ -23,7 +26,8 @@ namespace game {
 	
 	Game::~Game() {
 		delete sprite_;
-		
+		delete particles_;
+
 		for (int i = 0; i < gameObjects_.size(); i++) {
 			delete gameObjects_[i];
 		}
@@ -52,8 +56,14 @@ namespace game {
 		sprite_ = new Sprite();
 		sprite_->CreateGeometry();
 
+		particles_ = new Particles();
+		particles_->CreateGeometry();
+
 		// Initialize sprite shader
 		spriteShader_.Init((RESOURCES_DIR+std::string("/shader/sprite_vertex_shader.glsl")).c_str(), (RESOURCES_DIR+std::string("/shader/sprite_fragment_shader.glsl")).c_str());
+
+		// Initialize particle shader
+		particle_shader_.Init((RESOURCES_DIR + std::string("/shader/particle_vertex_shader.glsl")).c_str(), (RESOURCES_DIR + std::string("/shader/particle_fragment_shader.glsl")).c_str());
 
 		// Initialize time
 		currentTime_ = 0.0;
@@ -66,6 +76,12 @@ namespace game {
 		gameObjects_.push_back(player_);
 
 		gameObjects_.push_back(new EnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2));
+
+		// This part is probably incorrect
+		GameObject* particles = new ParticleSystem(glm::vec3(-0.5f, 0.0f, 0.0f), &textureManager_, 2,player_);
+		float pi_over_two = glm::pi<float>() / 2.0f;
+		particles->SetDirection(-pi_over_two);
+		gameObjects_.push_back(particles);
 	}
 	
 	void Game::SetTexture(GLuint w, const char *fname) {
