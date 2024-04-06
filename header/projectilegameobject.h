@@ -7,10 +7,12 @@
 namespace game {
 	class ProjectileGameObject : public GameObject {
 		public:
-			ProjectileGameObject(const glm::vec3& position, TextureManager* manager, int texture);
-
+			ProjectileGameObject(const glm::vec3 &position, const glm::vec3 &delta, double lifespan, TextureManager* manager, int texture);
+			
+			void Update(double delta_time) override;
 		protected:
 			Timer lifespanTimer_;
+			glm::vec3 delta_;
 	};
 }
 

@@ -10,7 +10,7 @@ namespace game {
 			HazardEnemyGameObject(const glm::vec3 &position, TextureManager *manager, int texture, ParametricMotion *controller);
 			~HazardEnemyGameObject();
 			
-			virtual void Update(double delta_time);
+			virtual void Update(double delta_time) override;
 		protected:
 			ParametricMotion *motionController_;
 			glm::vec3 origin_;

@@ -4,18 +4,11 @@
 #include "projectilegameobject.h"
 
 namespace game {
-    // Inherits from GameObject
-    class PlayerBulletGameObject : public ProjectileGameObject {
-
-        public:
-            PlayerBulletGameObject(const glm::vec3 position, TextureManager* manager, int texture);
-
-            virtual void Update(double delta_time) override;
-
-        private: 
-            Timer lifespanTimer_;
-
-    };
+	// Inherits from GameObject
+	class PlayerBulletGameObject : public ProjectileGameObject {
+		public:
+			PlayerBulletGameObject(const glm::vec3 &position, TextureManager* manager, int texture);
+	};
 }
 
 #endif

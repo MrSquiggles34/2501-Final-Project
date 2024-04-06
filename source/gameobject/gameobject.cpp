@@ -51,6 +51,10 @@ namespace game {
 		return glm::vec3(cos(direction_), sin(direction_), 0.0);
 	}
 	
+	void GameObject::SetHeading(const glm::vec3 &dir) {
+		SetDirection(atan2(dir.y, dir.x));
+	}
+	
 	glm::vec3 GameObject::GetRight() const {
 		float pi_over_two = glm::pi<float>() / 2.0f;
 		return glm::vec3(cos(direction_ - pi_over_two), sin(direction_ - pi_over_two), 0.0);

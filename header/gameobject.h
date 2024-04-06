@@ -33,6 +33,8 @@ namespace game {
 			glm::vec3 GetHeading() const;
 			glm::vec3 GetRight() const;
 			
+			void SetHeading(const glm::vec3 &dir);
+			
 			inline void SetTexture(int texture) {texture_ = textureManager_->GetTexture(texture);}
 			
 			inline void SetMovementSpeed(float speed) { movementSpeed_ = speed; }
