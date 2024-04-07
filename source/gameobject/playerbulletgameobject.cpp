@@ -2,7 +2,7 @@
 
 namespace game {
 	PlayerBulletGameObject::PlayerBulletGameObject(const glm::vec3 &position, TextureManager *manager, int texture)
-	 : ProjectileGameObject(position, glm::vec3(0.0f, 3.0f, 0.0f), 4.0f, manager, texture) {
+	 : ProjectileGameObject(position, glm::vec3(0.0f, 8.0f, 0.0f), 4.0f, manager, texture) {
 		//lifespanTimer_.Start(4.0f);
 		//motion_ = glm::vec3(0.0f, 3.0f, 0.0f);
 		std::cout << "bullet made" << std::endl;

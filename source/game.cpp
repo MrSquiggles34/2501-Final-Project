@@ -78,7 +78,7 @@ namespace game {
 		gameObjects_.push_back(new EnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2));
 
 		// This part is probably incorrect
-		GameObject* particles = new ParticleSystem(glm::vec3(-0.5f, 0.0f, 0.0f), &textureManager_, 2,player_);
+		GameObject* particles = new ParticleSystem(glm::vec3(-0.5f, 0.0f, 0.0f), &textureManager_, 3,player_);
 		float pi_over_two = glm::pi<float>() / 2.0f;
 		particles->SetDirection(-pi_over_two);
 		gameObjects_.push_back(particles);
@@ -110,7 +110,7 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png"};
+		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png"};
 		
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
@@ -164,26 +164,20 @@ namespace game {
 	
 	void Game::Update(double delta_time) {
 		currentTime_ += delta_time;
-		
-		for (int i = 0; i < gameObjects_.size(); i++) {
+
+		for (int i = 0; i < gameObjects_.size(); ) {
 			GameObject* currentGameObject = gameObjects_[i];
 
+			currentGameObject->Update(delta_time);
 
-			for (int i = 0; i < gameObjects_.size(); ) {
-				GameObject* currentGameObject = gameObjects_[i];
-
-				currentGameObject->Update(delta_time);
-
-				// Check if the current game object is marked for deletion, delete
-				if (currentGameObject->IsMarkedForDeletion()) {
-					delete currentGameObject;
-					gameObjects_.erase(gameObjects_.begin() + i); 
-				}
-				else {
-					++i; 
-				}
+			// Check if the current game object is marked for deletion, delete
+			if (currentGameObject->IsMarkedForDeletion()) {
+				delete currentGameObject;
+				gameObjects_.erase(gameObjects_.begin() + i); 
 			}
-			
+			else {
+				++i; 
+			}
 		}
 	} // Update
 	
