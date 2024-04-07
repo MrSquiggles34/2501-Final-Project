@@ -63,7 +63,7 @@ namespace game {
 		spriteShader_.Init((RESOURCES_DIR+std::string("/shader/sprite_vertex_shader.glsl")).c_str(), (RESOURCES_DIR+std::string("/shader/sprite_fragment_shader.glsl")).c_str());
 
 		// Initialize particle shader
-		particle_shader_.Init((RESOURCES_DIR + std::string("/shader/particle_vertex_shader.glsl")).c_str(), (RESOURCES_DIR + std::string("/shader/particle_fragment_shader.glsl")).c_str());
+		particleShader_.Init((RESOURCES_DIR+std::string("/shader/particle_vertex_shader.glsl")).c_str(), (RESOURCES_DIR+std::string("/shader/particle_fragment_shader.glsl")).c_str());
 
 		// Initialize time
 		currentTime_ = 0.0;
@@ -78,10 +78,11 @@ namespace game {
 		gameObjects_.push_back(new EnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2));
 
 		// This part is probably incorrect
-		GameObject* particles = new ParticleSystem(glm::vec3(-0.5f, 0.0f, 0.0f), &textureManager_, 3,player_);
+		GameObject *particles = new ParticleSystem(glm::vec3(-0.0f, 0.0f, 0.0f), &textureManager_, 3,player_);
 		float pi_over_two = glm::pi<float>() / 2.0f;
 		particles->SetDirection(-pi_over_two);
 		gameObjects_.push_back(particles);
+		
 	}
 	
 	void Game::SetTexture(GLuint w, const char *fname) {
@@ -111,13 +112,14 @@ namespace game {
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
 		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png"};
-		
+		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_};
+
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
 		glGenTextures(numTextures, tex_);
 		for (int i = 0; i < numTextures; i++){
 			SetTexture(tex_[i], (RESOURCES_DIR + std::string(textureDir) + std::string(textures[i])).c_str());
-			textureManager_.AddTexture(sprite_, &spriteShader_, tex_[i]);
+			textureManager_.AddTexture(sprite_, shaders[i], tex_[i]);
 		}
 		glBindTexture(GL_TEXTURE_2D, tex_[0]);
 	} // LoadAllTextures
@@ -169,6 +171,8 @@ namespace game {
 			GameObject* currentGameObject = gameObjects_[i];
 
 			currentGameObject->Update(delta_time);
+
+			
 
 			// Check if the current game object is marked for deletion, delete
 			if (currentGameObject->IsMarkedForDeletion()) {

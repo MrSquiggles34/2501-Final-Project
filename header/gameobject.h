@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include <glm/gtc/matrix_transform.hpp>
 #include "texturemanager.h"
 
 namespace game {

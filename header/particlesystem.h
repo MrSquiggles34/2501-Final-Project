@@ -2,6 +2,7 @@
 #define PARTICLE_SYSTEM_H_
 
 #include "gameobject.h"
+#include "timer.h"
 
 namespace game {
 
@@ -17,9 +18,10 @@ namespace game {
 
         private:
             GameObject *parent_;
-            GameTexture* Texture_;
+            GameTexture* texture_;
             Shader* shader_;
             Geometry* geometry_;
+            Timer lifespanTimer_;
 
     }; // class ParticleSystem
 

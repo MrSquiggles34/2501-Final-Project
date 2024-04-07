@@ -45,6 +45,7 @@ namespace game {
 		glm::mat4 transform_matrix = translation_matrix * rotation_matrix * scaling_matrix;
 		
 		texture_->Render(view_matrix, transform_matrix);
+
 	}
 	
 	glm::vec3 GameObject::GetHeading() const {

@@ -37,7 +37,7 @@ namespace game {
 			Geometry* particles_;
 
 			Shader spriteShader_;
-			Shader particle_shader_;
+			Shader particleShader_;
 			
 			GLFWwindow* window_;
 			
