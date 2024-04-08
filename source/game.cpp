@@ -9,6 +9,9 @@
 #include "game.h"
 #include "playerbulletgameobject.h"
 #include "enemygameobject.h"
+#include "projectilegameobject.h"
+#include "collectablegameobject.h"
+#include "coingameobject.h"
 
 #include "particles.h"
 #include "particlesystem.h"
@@ -82,6 +85,8 @@ namespace game {
 		float pi_over_two = glm::pi<float>() / 2.0f;
 		particles->SetDirection(-pi_over_two);
 		gameObjects_.push_back(particles);
+
+		gameObjects_.push_back(new CoinGameObject(glm::vec3(1.0f, 1.0f, 0.0f), &textureManager_, 4));
 		
 	}
 	
@@ -111,8 +116,8 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png"};
-		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_};
+		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png"};
+		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_};
 
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
@@ -171,8 +176,6 @@ namespace game {
 			GameObject* currentGameObject = gameObjects_[i];
 
 			currentGameObject->Update(delta_time);
-
-			
 
 			// Check if the current game object is marked for deletion, delete
 			if (currentGameObject->IsMarkedForDeletion()) {

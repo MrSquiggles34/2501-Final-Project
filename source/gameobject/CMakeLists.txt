@@ -6,6 +6,8 @@ target_sources(${PROJ_NAME}
 		projectilegameobject.cpp
 		enemygameobject.cpp
 		hazardenemygameobject.cpp
+		collectablegameobject.cpp
+		coingameobject.cpp
 )
 
 add_subdirectory(controllers)

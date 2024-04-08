@@ -67,7 +67,8 @@ namespace game {
 				ENEMY_BODY_HAZARD,
 				ENEMY_BODY_CHASER,
 				ENEMY_BODY_SHOOTER,
-				ENEMY_BULLET
+				ENEMY_BULLET,
+				COIN
 			};
 			
 			// Deletion

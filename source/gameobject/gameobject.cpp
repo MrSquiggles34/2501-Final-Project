@@ -30,7 +30,7 @@ namespace game {
 	}
 	
 	bool GameObject::IsIntersectingWith(GameObject* other) {
-		return false;
+		//return false
 	}
 	
 	void GameObject::OnCollisionWith(GameObject* other) {}

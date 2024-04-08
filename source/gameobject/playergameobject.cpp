@@ -11,5 +11,6 @@ namespace game {
 		SetCollisionMaskInBit(GameObject::PLAYER_BODY, true);
 		SetCollisionMaskOutBit(GameObject::ENEMY_BODY, true);
 		SetCollisionMaskOutBit(GameObject::ENEMY_BULLET, true);
+		SetCollisionMaskOutBit(GameObject::COIN, true);
 	}
 }
