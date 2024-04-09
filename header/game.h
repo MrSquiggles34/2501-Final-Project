@@ -48,6 +48,11 @@ namespace game {
 			
 			std::vector<GameObject*> gameObjects_;
 			PlayerGameObject* player_;
+
+			// Game State Variables
+			int score_;
+			int powerUp_;
+			int lives_;
 	};
 }
 

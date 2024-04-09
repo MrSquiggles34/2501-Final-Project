@@ -8,6 +8,8 @@ target_sources(${PROJ_NAME}
 		hazardenemygameobject.cpp
 		collectablegameobject.cpp
 		coingameobject.cpp
+		powerupgameobject.cpp
+		heartgameobject.cpp
 )
 
 add_subdirectory(controllers)

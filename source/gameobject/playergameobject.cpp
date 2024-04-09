@@ -7,10 +7,15 @@ namespace game {
 	 : GameObject(position, manager, texture) {
 		movementSpeed_ = 1.0f;
 		direction_ = glm::pi<float>() / 2.0f;
+		width_ = 0.2f;
+		height_ = 0.3f;
 		
 		SetCollisionMaskInBit(GameObject::PLAYER_BODY, true);
 		SetCollisionMaskOutBit(GameObject::ENEMY_BODY, true);
 		SetCollisionMaskOutBit(GameObject::ENEMY_BULLET, true);
 		SetCollisionMaskOutBit(GameObject::COIN, true);
+		SetCollisionMaskOutBit(GameObject::POWERUP, true);
+		SetCollisionMaskOutBit(GameObject::HEART, true);
+
 	}
 }

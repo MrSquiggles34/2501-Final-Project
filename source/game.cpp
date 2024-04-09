@@ -12,14 +12,16 @@
 #include "projectilegameobject.h"
 #include "collectablegameobject.h"
 #include "coingameobject.h"
+#include "powerupgameobject.h"
+#include "heartgameobject.h"
 
 #include "particles.h"
 #include "particlesystem.h"
 
 namespace game {
 	const char *WINDOW_TITLE = "2501 Final Project";
-	const unsigned int WINDOW_WIDTH = 800;
-	const unsigned int WINDOW_HEIGHT = 600;
+	const unsigned int WINDOW_WIDTH = 600;
+	const unsigned int WINDOW_HEIGHT = 900;
 	
 	const glm::vec3 BACKGROUND_COLOUR(0.0, 0.0, 1.0);
 	
@@ -70,6 +72,11 @@ namespace game {
 
 		// Initialize time
 		currentTime_ = 0.0;
+
+		// Initialize game 
+		score_ = 0;
+		powerUp_ = 0;
+		lives_ = 3;
 	}
 	
 	void Game::Setup(void) {
@@ -87,7 +94,10 @@ namespace game {
 		gameObjects_.push_back(particles);
 
 		gameObjects_.push_back(new CoinGameObject(glm::vec3(1.0f, 1.0f, 0.0f), &textureManager_, 4));
+
+		gameObjects_.push_back(new PowerUpGameObject(glm::vec3(2.0f, 1.0f, 0.0f), &textureManager_, 5));
 		
+		gameObjects_.push_back(new HeartGameObject(glm::vec3(-2.0f, 1.0f, 0.0f), &textureManager_, 6));
 	}
 	
 	void Game::SetTexture(GLuint w, const char *fname) {
@@ -116,8 +126,8 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png"};
-		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_};
+		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png", "star.png", "heart.png"};
+		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_, &spriteShader_, &spriteShader_};
 
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
@@ -172,18 +182,39 @@ namespace game {
 	void Game::Update(double delta_time) {
 		currentTime_ += delta_time;
 
-		for (int i = 0; i < gameObjects_.size(); ) {
+		// Iterate through gameObjects_
+		for (int i = 0; i < gameObjects_.size(); ++i) {
 			GameObject* currentGameObject = gameObjects_[i];
 
+			// Update each game object
 			currentGameObject->Update(delta_time);
 
-			// Check if the current game object is marked for deletion, delete
+			CoinGameObject* coin = dynamic_cast<CoinGameObject*>(currentGameObject);
+			if (coin) {
+				// Check for collision with the player
+				if (player_->IsCollidingWith(coin)) {
+					score_ += 1000;
+					coin->SetMarkedForDeletion(true);
+					std::cout << "new score: " << score_ << std::endl;
+					std::cout << "Player collided with a coin!" << std::endl;
+				}
+			}
+
+			PowerUpGameObject* powerUp = dynamic_cast<PowerUpGameObject*>(currentGameObject);
+			if (powerUp) {
+				// Check for collision with the player
+				if (player_->IsCollidingWith(powerUp)) {
+					std::cout << "Player collided with a power-up!" << std::endl;
+					//powerUp->Activate(); // Example: Activate the power-up
+					powerUp->SetMarkedForDeletion(true);
+				}
+			}
+
+			// Check if the current game object is marked for deletion and delete it if necessary
 			if (currentGameObject->IsMarkedForDeletion()) {
 				delete currentGameObject;
-				gameObjects_.erase(gameObjects_.begin() + i); 
-			}
-			else {
-				++i; 
+				gameObjects_.erase(gameObjects_.begin() + i);
+				--i; // Decrement i to account for the removed object
 			}
 		}
 	} // Update

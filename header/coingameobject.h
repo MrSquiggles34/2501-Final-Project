@@ -8,6 +8,8 @@ namespace game {
 	public:
 		CoinGameObject(const glm::vec3& position, TextureManager* manager, int texture);
 
+		void Update(double delta_time) override;
+
 		// Getters
 
 

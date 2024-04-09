@@ -15,6 +15,9 @@ namespace game {
 		texture_ = textureManager_->GetTexture(texture);
 		
 		scale_ = 1.0f;
+
+		width_ = 1.0f;
+		height_ = 1.0f;
 		
 		collisionMaskIn_ = 0;
 		collisionMaskOut_ = 0;
@@ -27,10 +30,34 @@ namespace game {
 		motion_.x = 0.0f;
 		motion_.y = 0.0f;
 		motion_.z = 0.0f;
+
 	}
 	
 	bool GameObject::IsIntersectingWith(GameObject* other) {
-		//return false
+		glm::vec3 pos1 = GetPosition();
+		glm::vec3 pos2 = other->GetPosition();
+		float width1 = width_;
+		float height1 = height_;
+		float width2 = other->GetWidth();
+		float height2 = other->GetHeight();
+
+		// Calculate the minimum and maximum coordinates for each object
+		float minX1 = pos1.x - width1 / 2.0f;
+		float maxX1 = pos1.x + width1 / 2.0f;
+		float minY1 = pos1.y - height1 / 2.0f;
+		float maxY1 = pos1.y + height1 / 2.0f;
+
+		float minX2 = pos2.x - width2 / 2.0f;
+		float maxX2 = pos2.x + width2 / 2.0f;
+		float minY2 = pos2.y - height2 / 2.0f;
+		float maxY2 = pos2.y + height2 / 2.0f;
+
+		// Check for intersection
+		bool intersectX = maxX1 >= minX2 && minX1 <= maxX2;
+		bool intersectY = maxY1 >= minY2 && minY1 <= maxY2;
+
+		// Return true if both X and Y axes intersect
+		return intersectX && intersectY;
 	}
 	
 	void GameObject::OnCollisionWith(GameObject* other) {}

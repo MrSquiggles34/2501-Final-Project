@@ -23,4 +23,6 @@ target_sources(${PROJ_NAME}
 		shooterenemygameobject.h
 		collectablegameobject.h
 		coingameobject.h
+		powerupgameobject.h
+		heartgameobject.h
 )

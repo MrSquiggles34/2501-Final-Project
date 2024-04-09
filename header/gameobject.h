@@ -68,12 +68,18 @@ namespace game {
 				ENEMY_BODY_CHASER,
 				ENEMY_BODY_SHOOTER,
 				ENEMY_BULLET,
-				COIN
+				COIN,
+				POWERUP,
+				HEART
 			};
 			
 			// Deletion
 			inline void SetMarkedForDeletion(bool marked) { markedForDeletion_ = marked; }
 			inline bool IsMarkedForDeletion() const { return markedForDeletion_; }
+
+			// Getting Width and Height for Axis Aligned Bouding Boxes
+			float GetWidth() const { return width_; }
+			float GetHeight() const { return height_; }
 
 		protected:
 			// Position & motion stuff
@@ -98,6 +104,10 @@ namespace game {
 			inline bool GetMaskBit(long int mask, int bit) const {
 				return (mask & (1 << bit)) != 0;
 			}
+
+			// Width and Height for axis Aligned bounding boxes
+			float width_;
+			float height_;
 
 			// Deletion
 			bool markedForDeletion_;
