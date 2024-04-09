@@ -10,6 +10,7 @@ target_sources(${PROJ_NAME}
 		coingameobject.cpp
 		powerupgameobject.cpp
 		heartgameobject.cpp
+		textgameobject.cpp
 )
 
 add_subdirectory(controllers)

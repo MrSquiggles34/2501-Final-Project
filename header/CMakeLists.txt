@@ -25,4 +25,5 @@ target_sources(${PROJ_NAME}
 		coingameobject.h
 		powerupgameobject.h
 		heartgameobject.h
+		textgameobject.h
 )

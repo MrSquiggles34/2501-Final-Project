@@ -17,6 +17,7 @@
 
 #include "particles.h"
 #include "particlesystem.h"
+#include "textgameobject.h"
 
 namespace game {
 	const char *WINDOW_TITLE = "2501 Final Project";
@@ -70,6 +71,9 @@ namespace game {
 		// Initialize particle shader
 		particleShader_.Init((RESOURCES_DIR+std::string("/shader/particle_vertex_shader.glsl")).c_str(), (RESOURCES_DIR+std::string("/shader/particle_fragment_shader.glsl")).c_str());
 
+		// Initialize text shader
+		textShader_.Init((RESOURCES_DIR + std::string("/shader/sprite_vertex_shader.glsl")).c_str(), (RESOURCES_DIR + std::string("/shader/text_fragment_shader.glsl")).c_str());
+
 		// Initialize time
 		currentTime_ = 0.0;
 
@@ -77,11 +81,17 @@ namespace game {
 		score_ = 0;
 		powerUp_ = 0;
 		lives_ = 3;
+		weaponType_ = 1;
 	}
 	
 	void Game::Setup(void) {
 		LoadAllTextures();
 		
+		// Set up text quad
+		TextGameObject* text = new TextGameObject(glm::vec3(0.0f, -2.0f, 0.0f), &textureManager_, 7);
+		text->SetText("Hello World!");
+		gameObjects_.push_back(text);
+
 		player_ = new PlayerGameObject(glm::vec3(0.0f, 0.0f, 0.0f), &textureManager_, 0);
 		gameObjects_.push_back(player_);
 
@@ -126,8 +136,8 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png", "star.png", "heart.png"};
-		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_, &spriteShader_, &spriteShader_};
+		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png", "star.png", "heart.png", "font.png"};
+		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_, &spriteShader_, &spriteShader_, &textShader_};
 
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
@@ -195,8 +205,7 @@ namespace game {
 				if (player_->IsCollidingWith(coin)) {
 					score_ += 1000;
 					coin->SetMarkedForDeletion(true);
-					std::cout << "new score: " << score_ << std::endl;
-					std::cout << "Player collided with a coin!" << std::endl;
+					std::cout << "Player collided with a coin! Score: " << score_ << std::endl;
 				}
 			}
 
@@ -211,7 +220,8 @@ namespace game {
 			HeartGameObject* heart = dynamic_cast<HeartGameObject*>(currentGameObject);
 			if (heart) {
 				if (player_->IsCollidingWith(heart)) {
-					std::cout << "Player collided with a heart!" << std::endl;
+					lives_++;
+					std::cout << "Player collided with a heart! Lives: " << lives_ << std::endl;
 					heart->SetMarkedForDeletion(true);
 				}
 			}
@@ -248,14 +258,17 @@ namespace game {
 		}
 		if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS && glfwGetTime() - player_->getLastShotTime() > player_->getShootingCooldown())
 		{
-			std::cout << "fired" << std::endl;
+			std::cout << "fired " << std::endl;
 			glm::vec3 curpos = player->GetPosition();
 			
-			float bulletOffset = 0.5f; // Adjust this value as needed
-			glm::vec3 bulletPosition = curpos + glm::vec3(0.0f, bulletOffset, 0.0f);
+			if (weaponType_ = 1) {
+				float bulletOffset = 0.5f; 
+				glm::vec3 bulletPosition = curpos + glm::vec3(0.0f, bulletOffset, 0.0f);
 
-			PlayerBulletGameObject* bullet = new PlayerBulletGameObject(bulletPosition, &textureManager_, 1);
-			gameObjects_.insert(gameObjects_.end(), bullet);
+				PlayerBulletGameObject* bullet = new PlayerBulletGameObject(bulletPosition, &textureManager_, 1);
+				gameObjects_.insert(gameObjects_.end(), bullet);
+			}
+			
 
 			// Update the last shot time
 			player_->setLastShotTime(glfwGetTime());

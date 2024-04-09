@@ -38,6 +38,7 @@ namespace game {
 
 			Shader spriteShader_;
 			Shader particleShader_;
+			Shader textShader_;
 			
 			GLFWwindow* window_;
 			
@@ -53,6 +54,7 @@ namespace game {
 			int score_;
 			int powerUp_;
 			int lives_;
+			int weaponType_;
 	};
 }
 

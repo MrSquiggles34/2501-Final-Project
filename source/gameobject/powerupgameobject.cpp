@@ -12,6 +12,6 @@ namespace game {
 	}
 
 	void PowerUpGameObject::Update(double delta_time) {
-		GameObject::Update(delta_time);
+		CollectableGameObject::Update(delta_time);
 	}
 }
