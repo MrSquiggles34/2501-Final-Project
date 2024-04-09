@@ -202,11 +202,17 @@ namespace game {
 
 			PowerUpGameObject* powerUp = dynamic_cast<PowerUpGameObject*>(currentGameObject);
 			if (powerUp) {
-				// Check for collision with the player
 				if (player_->IsCollidingWith(powerUp)) {
 					std::cout << "Player collided with a power-up!" << std::endl;
-					//powerUp->Activate(); // Example: Activate the power-up
 					powerUp->SetMarkedForDeletion(true);
+				}
+			}
+
+			HeartGameObject* heart = dynamic_cast<HeartGameObject*>(currentGameObject);
+			if (heart) {
+				if (player_->IsCollidingWith(heart)) {
+					std::cout << "Player collided with a heart!" << std::endl;
+					heart->SetMarkedForDeletion(true);
 				}
 			}
 
