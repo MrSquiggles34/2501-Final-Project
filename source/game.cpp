@@ -219,7 +219,7 @@ namespace game {
 			currentGameObject->Update(delta_time);
 			
 			ShootingGameObject* shooter = dynamic_cast<ShootingGameObject*>(currentGameObject);
-			if (shooter && shooter->GetIsShooting()) {
+			if (shooter && shooter->GetIsShooting() && shooter->GetCanShoot(currentTime_)) {
 				switch(shooter->GetBulletType()) {
 					case ShootingGameObject::PLAYER_BULLET:
 						if (weaponType_ == 1) {
