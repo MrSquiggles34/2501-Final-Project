@@ -7,7 +7,7 @@ namespace game {
 	class EnemyBulletGameObject : public ProjectileGameObject {
 		public:
 			EnemyBulletGameObject(const glm::vec3 &position, TextureManager *manager, int texture);
-	}
+	};
 }
 
 #endif

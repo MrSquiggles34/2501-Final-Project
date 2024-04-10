@@ -17,10 +17,12 @@ namespace game {
 			virtual void Render(const glm::mat4 &view_matrix);
 			
 			inline glm::vec3 GetPosition() const { return position_; }
+			inline glm::vec3 GetVelocity() const { return velocity_; }
 			inline glm::vec3 GetMotion() const { return motion_; }
 			inline float GetDirection() const { return direction_; }
 			
 			inline void SetPosition(const glm::vec3 &position) { position_ = position; }
+			inline void SetVelocity(const glm::vec3 &velocity) { velocity_ = velocity; }
 			inline void SetMotion(const glm::vec3 &motion) { motion_ = motion; }
 			inline void SetDirection(float direction) { direction_ = direction; RotationModulus(); }
 			
@@ -40,6 +42,13 @@ namespace game {
 			
 			inline void SetMovementSpeed(float speed) { movementSpeed_ = speed; }
 			inline float GetMovementSpeed() const { return movementSpeed_; }
+			
+			inline void SetVelocityLimit(float limit) { if (limit > 0) velocityLimit_ = limit; }
+			inline float GetVelocityLimit() const { return velocityLimit_; }
+			
+			inline void SetDragFactor(float drag) { if (drag > 0 && drag < 1) dragFactor_ = drag; }
+			inline float GetDragFactor() const { return dragFactor_; }
+
 
 			// Collision
 			inline void SetCollisionMaskIn(long int mask) { collisionMaskIn_ = mask; }
@@ -84,9 +93,12 @@ namespace game {
 		protected:
 			// Position & motion stuff
 			glm::vec3 position_;
+			glm::vec3 velocity_;
 			glm::vec3 motion_;
 			float direction_;
 			float movementSpeed_;
+			float velocityLimit_;
+			float dragFactor_;
 			void RotationModulus();
 			
 			// Texture & rendering stuff

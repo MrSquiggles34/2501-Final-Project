@@ -5,12 +5,15 @@ target_sources(${PROJ_NAME}
 		playerbulletgameobject.cpp
 		projectilegameobject.cpp
 		enemygameobject.cpp
+		enemybulletgameobject.cpp
 		hazardenemygameobject.cpp
+		shooterenemygameobject.cpp
 		collectablegameobject.cpp
 		coingameobject.cpp
 		powerupgameobject.cpp
 		heartgameobject.cpp
 		textgameobject.cpp
+		shootinggameobject.cpp
 )
 
 add_subdirectory(controllers)

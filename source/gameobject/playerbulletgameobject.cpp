@@ -5,12 +5,13 @@ namespace game {
 	 : ProjectileGameObject(position, glm::vec3(0.0f, 8.0f, 0.0f), 4.0f, manager, texture) {
 		//lifespanTimer_.Start(4.0f);
 		//motion_ = glm::vec3(0.0f, 3.0f, 0.0f);
-		std::cout << "bullet made" << std::endl;
+		//std::cout << "bullet made" << std::endl;
 		SetCollisionMaskInBit(GameObject::PLAYER_BULLET, true);
 		SetCollisionMaskOutBit(GameObject::ENEMY_BODY, true);
 		// SetCollisionMaskOutBit(GameObject::ENEMY_BULLET, true); // Do bullets collide?
 	}
 	/*
+	// Bullet code moved to ProjectileGameObject.cpp
 	void PlayerBulletGameObject::Update(double delta_time) {
 		lifespanTimer_.Update(delta_time);
 		motion_.y += 2.0f * delta_time;

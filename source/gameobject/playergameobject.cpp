@@ -4,7 +4,8 @@
 
 namespace game {
 	PlayerGameObject::PlayerGameObject(const glm::vec3 &position, TextureManager *manager, int texture)
-	 : GameObject(position, manager, texture) {
+	 : GameObject(position, manager, texture),
+	   ShootingGameObject(0.5, ShootingGameObject::PLAYER_BULLET) {
 		movementSpeed_ = 2.0f;
 		direction_ = glm::pi<float>() / 2.0f;
 		width_ = 0.2f;
@@ -16,6 +17,5 @@ namespace game {
 		SetCollisionMaskOutBit(GameObject::COIN, true);
 		SetCollisionMaskOutBit(GameObject::POWERUP, true);
 		SetCollisionMaskOutBit(GameObject::HEART, true);
-
 	}
 }

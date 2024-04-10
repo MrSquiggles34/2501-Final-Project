@@ -8,7 +8,12 @@
 
 #include "game.h"
 #include "playerbulletgameobject.h"
+#include "enemybulletgameobject.h"
 #include "enemygameobject.h"
+#include "hazardenemygameobject.h"
+#include "shooterenemygameobject.h"
+#include "chaserenemygameobject.h"
+
 #include "projectilegameobject.h"
 #include "collectablegameobject.h"
 #include "coingameobject.h"
@@ -198,7 +203,29 @@ namespace game {
 
 			// Update each game object
 			currentGameObject->Update(delta_time);
-
+			
+			ShootingGameObject* shooter = dynamic_cast<ShootingGameObject*>(currentGameObject);
+			if (shooter && shooter->GetIsShooting()) {
+				switch(shooter->GetBulletType()) {
+					case ShootingGameObject::PLAYER_BULLET:
+						if (weaponType_ == 1) {
+							float bulletOffset = 0.5f; 
+							glm::vec3 bulletPosition = currentGameObject->GetPosition() + glm::vec3(0.0f, bulletOffset, 0.0f);
+							PlayerBulletGameObject* bullet = new PlayerBulletGameObject(bulletPosition, &textureManager_, 1);
+							gameObjects_.insert(gameObjects_.end(), bullet);
+						}
+						break;
+					case ShootingGameObject::ENEMY_BULLET:
+						float bulletOffset = -0.5f; 
+						glm::vec3 bulletPosition = currentGameObject->GetPosition() + glm::vec3(0.0f, bulletOffset, 0.0f);
+						EnemyBulletGameObject* bullet = new EnemyBulletGameObject(bulletPosition, &textureManager_, 1);
+						gameObjects_.insert(gameObjects_.end(), bullet);
+						break;
+				}
+				shooter->SetIsShooting(false);
+				shooter->SetLastShotTime(currentTime_);
+			}
+			
 			CoinGameObject* coin = dynamic_cast<CoinGameObject*>(currentGameObject);
 			if (coin) {
 				// Check for collision with the player
@@ -256,22 +283,9 @@ namespace game {
 		if (glfwGetKey(window_, GLFW_KEY_D) == GLFW_PRESS) {
 			player_->AddRelativeMotion(glm::vec3(0.0f, playerSpeed, 0.0f));
 		}
-		if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS && glfwGetTime() - player_->getLastShotTime() > player_->getShootingCooldown())
-		{
+		if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS && player_->GetCanShoot(glfwGetTime())) {
 			std::cout << "fired " << std::endl;
-			glm::vec3 curpos = player->GetPosition();
-			
-			if (weaponType_ = 1) {
-				float bulletOffset = 0.5f; 
-				glm::vec3 bulletPosition = curpos + glm::vec3(0.0f, bulletOffset, 0.0f);
-
-				PlayerBulletGameObject* bullet = new PlayerBulletGameObject(bulletPosition, &textureManager_, 1);
-				gameObjects_.insert(gameObjects_.end(), bullet);
-			}
-			
-
-			// Update the last shot time
-			player_->setLastShotTime(glfwGetTime());
+			player_->SetIsShooting(true);
 		}
 	}
 	

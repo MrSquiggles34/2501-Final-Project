@@ -10,6 +10,8 @@ namespace game {
 		motion_ = glm::vec3(0.0f);
 		direction_ = 0.0f;
 		movementSpeed_ = 1.0f;
+		velocityLimit_ = 1.0f;
+		dragFactor_ = 0.95;
 		
 		textureManager_ = textureManager;
 		texture_ = textureManager_->GetTexture(texture);
@@ -26,11 +28,13 @@ namespace game {
 	}
 	
 	void GameObject::Update(double delta_time) {
-		position_ += motion_ * ((float) delta_time) * movementSpeed_;
+		velocity_ += motion_ * ((float) delta_time);
+		velocity_ *= dragFactor_;
+		if (glm::length(velocity_) > velocityLimit_) velocity_ = glm::normalize(velocity_) * velocityLimit_;
+		position_ += velocity_ * ((float) delta_time) * movementSpeed_;
 		motion_.x = 0.0f;
 		motion_.y = 0.0f;
 		motion_.z = 0.0f;
-
 	}
 	
 	bool GameObject::IsIntersectingWith(GameObject* other) {
