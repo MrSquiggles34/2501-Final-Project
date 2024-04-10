@@ -11,7 +11,7 @@ namespace game {
 	
 	void ShooterEnemyGameObject::Update(double delta_time) {
 		glm::vec3 deltaToTarget = position_;
-		glm::vec3 motion(deltaToTarget.x, 0.0f, 0.0f);
+		glm::vec3 motion(-deltaToTarget.x, 0.0f, 0.0f);
 		if (glm::length(deltaToTarget) > 40.0f) {
 			// Evasive maneuvers
 			motion.y = -deltaToTarget.y;

@@ -8,6 +8,7 @@ namespace game {
 	GameObject::GameObject(const glm::vec3 &position, TextureManager* textureManager, int texture) {
 		position_ = position;
 		motion_ = glm::vec3(10.0f);
+		staticMotion_ = glm::vec3(0.0f);
 		direction_ = 0.0f;
 		movementSpeed_ = 10.0f;
 		velocityLimit_ = 10.0f;
@@ -33,9 +34,8 @@ namespace game {
 		if (glm::length(velocity_) > velocityLimit_) velocity_ = glm::normalize(velocity_) * velocityLimit_;
 		position_ += velocity_ * ((float) delta_time) * movementSpeed_;
 		position_ += staticMotion_ * ((float) delta_time);
-		motion_.x = 0.0f;
-		motion_.y = 0.0f;
-		motion_.z = 0.0f;
+		staticMotion_ = glm::vec3(0.0f);
+		motion_ = glm::vec3(0.0f);
 	}
 	
 	bool GameObject::IsIntersectingWith(GameObject* other) {
