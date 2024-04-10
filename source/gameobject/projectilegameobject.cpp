@@ -4,20 +4,18 @@ namespace game {
 	ProjectileGameObject::ProjectileGameObject(
 		const glm::vec3 &position, const glm::vec3 &delta, double lifespan,
 		TextureManager* manager, int texture
-	) : GameObject(position, manager, texture), lifespanTimer_() {
-		delta_ = delta;
+	) : LifespanGameObject(position, manager, texture, lifespan) {
 		SetHeading(delta);
-		lifespanTimer_.Start(lifespan);
+		movementSpeed_ = glm::length(delta);
 	}
 	
 	void ProjectileGameObject::Update(double delta_time) {
-		lifespanTimer_.Update(delta_time);
-		AddMotion(delta_);
+		AddRelativeMotion(glm::vec3(1.0f, 0.0f, 0.0f));
 		GameObject::Update(delta_time);
-		
-		if (lifespanTimer_.Finished()) {
-			SetMarkedForDeletion(true);
-			return;
-		}
+		LifespanGameObject::Update(delta_time);
+	}
+	
+	void ProjectileGameObject::OnCollisionWith(GameObject* other) {
+		SetMarkedForDeletion(true);
 	}
 }

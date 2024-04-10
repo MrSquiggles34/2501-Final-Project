@@ -7,6 +7,7 @@ namespace game {
 		//motion_ = glm::vec3(0.0f, 3.0f, 0.0f);
 		//std::cout << "bullet made" << std::endl;
 		SetCollisionMaskInBit(GameObject::PLAYER_BULLET, true);
+		SetCollisionMaskInBit(GameObject::TEAM_PLAYER, true);
 		SetCollisionMaskOutBit(GameObject::ENEMY_BODY, true);
 		// SetCollisionMaskOutBit(GameObject::ENEMY_BULLET, true); // Do bullets collide?
 	}

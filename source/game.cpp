@@ -81,13 +81,6 @@ namespace game {
 
 		// Initialize time
 		currentTime_ = 0.0;
-
-		// Initialize game 
-		score_ = 0;
-		powerUp_ = 0;
-		lives_ = 3;
-		weaponType_ = 1;
-
 	}
 	
 	void Game::Setup(void) {
@@ -220,51 +213,21 @@ namespace game {
 			
 			ShootingGameObject* shooter = dynamic_cast<ShootingGameObject*>(currentGameObject);
 			if (shooter && shooter->GetIsShooting() && shooter->GetCanShoot(currentTime_)) {
-				switch(shooter->GetBulletType()) {
-					case ShootingGameObject::PLAYER_BULLET:
-						if (weaponType_ == 1) {
-							float bulletOffset = 0.5f; 
-							glm::vec3 bulletPosition = currentGameObject->GetPosition() + glm::vec3(0.0f, bulletOffset, 0.0f);
-							PlayerBulletGameObject* bullet = new PlayerBulletGameObject(bulletPosition, &textureManager_, 1);
-							gameObjects_.insert(gameObjects_.end(), bullet);
-						}
-						break;
-					case ShootingGameObject::ENEMY_BULLET:
-						float bulletOffset = -0.5f; 
-						glm::vec3 bulletPosition = currentGameObject->GetPosition() + glm::vec3(0.0f, bulletOffset, 0.0f);
-						EnemyBulletGameObject* bullet = new EnemyBulletGameObject(bulletPosition, &textureManager_, 1);
-						gameObjects_.insert(gameObjects_.end(), bullet);
-						break;
-				}
+				gameObjects_.insert(gameObjects_.end(), shooter->CreateProjectile());
 				shooter->SetIsShooting(false);
 				shooter->SetLastShotTime(currentTime_);
 			}
 			
-			CoinGameObject* coin = dynamic_cast<CoinGameObject*>(currentGameObject);
-			if (coin) {
-				// Check for collision with the player
-				if (player_->IsCollidingWith(coin)) {
-					score_ += 1000;
-					coin->SetMarkedForDeletion(true);
-					std::cout << "Player collided with a coin! Score: " << score_ << std::endl;
-				}
-			}
-
-			PowerUpGameObject* powerUp = dynamic_cast<PowerUpGameObject*>(currentGameObject);
-			if (powerUp) {
-				if (player_->IsCollidingWith(powerUp)) {
-					std::cout << "Player collided with a power-up!" << std::endl;
-					powerUp->SetMarkedForDeletion(true);
-				}
-			}
-
-			HeartGameObject* heart = dynamic_cast<HeartGameObject*>(currentGameObject);
-			if (heart) {
-				if (player_->IsCollidingWith(heart)) {
-					lives_++;
-					std::cout << "Player collided with a heart! Lives: " << lives_ << std::endl;
-					heart->SetMarkedForDeletion(true);
-				}
+			// Iterate through all the other already-updated objects.
+			for (int j = 0; j < i; j++) {
+				GameObject* otherGameObject = gameObjects_[j];
+				// Calculate collisions between objects
+				// Calculate before applying to make sure no issues arise (e.g: object is marked for deletion before calculating the reverse collision)
+				bool collisionAffectsOther = currentGameObject->IsCollidingWith(otherGameObject);
+				bool collisionAffectsCurrent = otherGameObject->IsCollidingWith(currentGameObject);
+				// Apply collision effects if necessary
+				if (collisionAffectsOther) otherGameObject->OnCollisionWith(currentGameObject);
+				if (collisionAffectsCurrent) currentGameObject->OnCollisionWith(otherGameObject);
 			}
 
 			// Check if the current game object is marked for deletion and delete it if necessary

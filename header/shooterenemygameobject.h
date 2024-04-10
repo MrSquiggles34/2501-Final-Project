@@ -10,6 +10,8 @@ namespace game {
 			ShooterEnemyGameObject(const glm::vec3 &position, TextureManager *manager, int texture, GameObject* target);
 			
 			virtual void Update(double delta_time) override;
+			
+			virtual ProjectileGameObject* CreateProjectile() override;
 		protected:
 			GameObject* targetObj_;
 	};

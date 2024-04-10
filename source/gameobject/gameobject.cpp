@@ -32,6 +32,7 @@ namespace game {
 		velocity_ *= dragFactor_;
 		if (glm::length(velocity_) > velocityLimit_) velocity_ = glm::normalize(velocity_) * velocityLimit_;
 		position_ += velocity_ * ((float) delta_time) * movementSpeed_;
+		position_ += staticMotion_ * ((float) delta_time);
 		motion_.x = 0.0f;
 		motion_.y = 0.0f;
 		motion_.z = 0.0f;
@@ -65,7 +66,6 @@ namespace game {
 	}
 	
 	void GameObject::OnCollisionWith(GameObject* other) {}
-	void GameObject::WhenCollidedBy(GameObject* other) {}
 	
 	void GameObject::Render(const glm::mat4 &view_matrix) {
 		if (texture_ == nullptr) return; // Invisible Object

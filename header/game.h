@@ -55,12 +55,6 @@ namespace game {
 			std::vector<GameObject*> gameObjects_;
 			PlayerGameObject* player_;
 
-			// Game State Variables
-			int score_;
-			int powerUp_;
-			int lives_;
-			int weaponType_;
-
 			// Spawning items (I'm sorry)
 			double lastCoinSpawnTime_ = 0.0; 
 			double coinSpawnInterval_ = 11.0; 

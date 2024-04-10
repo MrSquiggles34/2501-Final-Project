@@ -19,11 +19,13 @@ namespace game {
 			inline glm::vec3 GetPosition() const { return position_; }
 			inline glm::vec3 GetVelocity() const { return velocity_; }
 			inline glm::vec3 GetMotion() const { return motion_; }
+			inline glm::vec3 GetStaticMotion() const { return staticMotion_; }
 			inline float GetDirection() const { return direction_; }
 			
 			inline void SetPosition(const glm::vec3 &position) { position_ = position; }
 			inline void SetVelocity(const glm::vec3 &velocity) { velocity_ = velocity; }
 			inline void SetMotion(const glm::vec3 &motion) { motion_ = motion; }
+			inline void SetStaticMotion(const glm::vec3 &staticMotion) { staticMotion_ = staticMotion; }
 			inline void SetDirection(float direction) { direction_ = direction; RotationModulus(); }
 			
 			inline void AddMotion(const glm::vec3 &delta) { motion_ += delta; }
@@ -31,6 +33,7 @@ namespace game {
 				glm::vec3 relativeDelta = delta.x * GetHeading() + delta.y * GetRight();
 				motion_ += relativeDelta;
 			}
+			inline void AddStaticMotion(const glm::vec3 &delta) { staticMotion_ += delta; }
 			inline void Rotate(float delta) { direction_ += delta; RotationModulus(); }
 			
 			glm::vec3 GetHeading() const;
@@ -53,28 +56,6 @@ namespace game {
 
 
 			// Collision
-			inline void SetCollisionMaskIn(long int mask) { collisionMaskIn_ = mask; }
-			inline long int GetCollisionMaskIn() const { return collisionMaskIn_; }
-			
-			inline void SetCollisionMaskInBit(int bit, bool value) { collisionMaskIn_ = SetMaskBit(collisionMaskIn_, bit, value); }
-			inline bool GetCollisionMaskInBit(int bit) const { return GetMaskBit(collisionMaskIn_, bit); }
-			
-			inline void SetCollisionMaskOut(long int mask) { collisionMaskOut_ = mask; }
-			inline long int GetCollisionMaskOut() const { return collisionMaskOut_; }
-			
-			inline void SetCollisionMaskOutBit(int bit, bool value) { collisionMaskOut_ = SetMaskBit(collisionMaskOut_, bit, value); }
-			inline bool GetCollisionMaskOutBit(int bit) const { return GetMaskBit(collisionMaskOut_, bit); }
-			
-			inline bool CanCollideWith(GameObject* other) { return (collisionMaskOut_ & other->collisionMaskIn_) != 0; }
-			virtual bool IsIntersectingWith(GameObject* other);
-			inline bool IsCollidingWith(GameObject* other) { return CanCollideWith(other) && IsIntersectingWith(other); }
-			virtual void OnCollisionWith(GameObject* other); // Outgoing
-			virtual void WhenCollidedBy(GameObject* other);  // Incoming
-
-			// Background 
-			inline void SetTileTexture(bool tile_texture) { tile_texture_ = tile_texture; }
-			void SetTextureWrap(GLint wrap_mode);
-			
 			enum CollisionBit {
 				PLAYER_BODY,
 				PLAYER_BULLET,
@@ -85,8 +66,34 @@ namespace game {
 				ENEMY_BULLET,
 				COIN,
 				POWERUP,
-				HEART
+				HEART,
+				TEAM_PLAYER,
+				TEAM_ENEMY
 			};
+			
+			inline void SetCollisionMaskIn(long int mask) { collisionMaskIn_ = mask; }
+			inline long int GetCollisionMaskIn() const { return collisionMaskIn_; }
+			
+			inline void SetCollisionMaskInBit(CollisionBit bit, bool value) { collisionMaskIn_ = SetMaskBit(collisionMaskIn_, bit, value); }
+			inline bool GetCollisionMaskInBit(CollisionBit bit) const { return GetMaskBit(collisionMaskIn_, bit); }
+			
+			inline void SetCollisionMaskOut(long int mask) { collisionMaskOut_ = mask; }
+			inline long int GetCollisionMaskOut() const { return collisionMaskOut_; }
+			
+			inline void SetCollisionMaskOutBit(CollisionBit bit, bool value) { collisionMaskOut_ = SetMaskBit(collisionMaskOut_, bit, value); }
+			inline bool GetCollisionMaskOutBit(CollisionBit bit) const { return GetMaskBit(collisionMaskOut_, bit); }
+			
+			inline bool CanCollideWith(GameObject* other) {
+				// Objects that *should* be deleted are not checked for collisions
+				return !(markedForDeletion_ || other->markedForDeletion_) && ((collisionMaskOut_ & other->collisionMaskIn_) != 0);
+			}
+			virtual bool IsIntersectingWith(GameObject* other);
+			inline bool IsCollidingWith(GameObject* other) { return CanCollideWith(other) && IsIntersectingWith(other); }
+			virtual void OnCollisionWith(GameObject* other);
+
+			// Background 
+			inline void SetTileTexture(bool tile_texture) { tile_texture_ = tile_texture; }
+			void SetTextureWrap(GLint wrap_mode);
 			
 			// Deletion
 			inline void SetMarkedForDeletion(bool marked) { markedForDeletion_ = marked; }
@@ -101,6 +108,7 @@ namespace game {
 			glm::vec3 position_;
 			glm::vec3 velocity_;
 			glm::vec3 motion_;
+			glm::vec3 staticMotion_;
 			float direction_;
 			float movementSpeed_;
 			float velocityLimit_;

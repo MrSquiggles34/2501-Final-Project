@@ -10,8 +10,4 @@ namespace game {
 		SetCollisionMaskInBit(GameObject::POWERUP, true);
 		SetCollisionMaskOutBit(GameObject::PLAYER_BODY, true);
 	}
-
-	void PowerUpGameObject::Update(double delta_time) {
-		CollectableGameObject::Update(delta_time);
-	}
 }

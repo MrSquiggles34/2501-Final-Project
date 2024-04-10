@@ -1,19 +1,13 @@
 target_sources(${PROJ_NAME}
 	PRIVATE
 		gameobject.cpp
-		playergameobject.cpp
-		playerbulletgameobject.cpp
+		lifespangameobject.cpp
 		projectilegameobject.cpp
-		enemygameobject.cpp
-		enemybulletgameobject.cpp
-		hazardenemygameobject.cpp
-		shooterenemygameobject.cpp
-		collectablegameobject.cpp
-		coingameobject.cpp
-		powerupgameobject.cpp
-		heartgameobject.cpp
-		textgameobject.cpp
 		shootinggameobject.cpp
+		textgameobject.cpp
 )
 
+add_subdirectory(collectable)
 add_subdirectory(controllers)
+add_subdirectory(enemy)
+add_subdirectory(player)

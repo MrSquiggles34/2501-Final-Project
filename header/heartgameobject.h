@@ -5,19 +5,8 @@
 
 namespace game {
 	class HeartGameObject : public CollectableGameObject {
-	public:
-		HeartGameObject(const glm::vec3& position, TextureManager* manager, int texture);
-
-		void Update(double delta_time) override;
-
-		// Getters
-
-
-		// Setters
-
-
-	private:
-
+		public:
+			HeartGameObject(const glm::vec3& position, TextureManager* manager, int texture);
 	};
 }
 

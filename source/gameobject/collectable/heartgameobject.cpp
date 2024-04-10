@@ -12,8 +12,4 @@ namespace game {
 		SetCollisionMaskInBit(GameObject::HEART, true);
 		SetCollisionMaskOutBit(GameObject::PLAYER_BODY, true);
 	}
-
-	void HeartGameObject::Update(double delta_time) {
-		CollectableGameObject::Update(delta_time);
-	}
 }

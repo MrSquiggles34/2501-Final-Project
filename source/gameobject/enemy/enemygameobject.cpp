@@ -9,7 +9,12 @@ namespace game {
 		direction_ = -glm::pi<float>() / 2.0f;
 		
 		SetCollisionMaskInBit(GameObject::ENEMY_BODY, true);
+		SetCollisionMaskInBit(GameObject::TEAM_ENEMY, true);
 		SetCollisionMaskOutBit(GameObject::PLAYER_BODY, true);
 		SetCollisionMaskOutBit(GameObject::PLAYER_BULLET, true);
+	}
+	
+	void EnemyGameObject::OnCollisionWith(GameObject* other) {
+		SetMarkedForDeletion(true);
 	}
 }

@@ -1,6 +1,8 @@
 #ifndef SHOOTING_GAME_OBJECT_H_
 #define SHOOTING_GAME_OBJECT_H_
 
+#include "projectilegameobject.h"
+
 namespace game {
 	class ShootingGameObject {
 		public:
@@ -22,6 +24,8 @@ namespace game {
 			inline void SetShotDelay(double delay) { shotDelay_ = delay; }
 			inline void SetLastShotTime(double time) { lastShotTime_ = time; }
 			inline void SetIsShooting(bool value) { isShooting_ = value; }
+			
+			virtual ProjectileGameObject* CreateProjectile() = 0;
 		protected:
 			double shotDelay_;
 			double lastShotTime_ = 0.0;

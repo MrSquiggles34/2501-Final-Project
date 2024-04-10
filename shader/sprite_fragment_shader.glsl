@@ -1,3 +1,6 @@
+// Source code of fragment shader
+#version 130
+
 in vec4 color_interp;
 in vec2 uv_interp;
 

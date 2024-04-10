@@ -10,8 +10,4 @@ namespace game {
 		SetCollisionMaskInBit(GameObject::COIN, true);
 		SetCollisionMaskOutBit(GameObject::PLAYER_BODY, true);
 	}
-
-	void CoinGameObject::Update(double delta_time) {
-		CollectableGameObject::Update(delta_time);
-	}
 }

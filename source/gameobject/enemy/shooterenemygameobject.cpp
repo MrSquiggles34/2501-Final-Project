@@ -1,4 +1,5 @@
 #include "shooterenemygameobject.h"
+#include "enemybulletgameobject.h"
 
 namespace game {
 	ShooterEnemyGameObject::ShooterEnemyGameObject(const glm::vec3 &position, TextureManager *manager, int texture, GameObject* target)
@@ -22,5 +23,13 @@ namespace game {
 		motion = glm::normalize(motion);
 		AddMotion(motion);
 		GameObject::Update(delta_time);
+	}
+	
+	ProjectileGameObject* ShooterEnemyGameObject::CreateProjectile() {
+		float bulletOffset = -0.5f;
+		glm::vec3 bulletPosition = position_ + glm::vec3(0.0f, bulletOffset, 0.0f);
+		ProjectileGameObject* bullet;
+		bullet = new EnemyBulletGameObject(bulletPosition, textureManager_, 1);
+		return bullet;
 	}
 }

@@ -7,6 +7,8 @@ namespace game {
 	class EnemyGameObject : public GameObject {
 		public:
 			EnemyGameObject(const glm::vec3 &position, TextureManager* manager, int texture);
+			
+			virtual void OnCollisionWith(GameObject* other) override;
 	};
 }
 #endif
