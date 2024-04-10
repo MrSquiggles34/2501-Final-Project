@@ -267,6 +267,13 @@ namespace game {
 			std::cout << "fired " << std::endl;
 			player_->SetIsShooting(true);
 		}
+		if (!cycleWeaponButtonPressed_ && glfwGetKey(window_, GLFW_KEY_TAB) == GLFW_PRESS) {
+			player_->CycleCurrentWeapon();
+			cycleWeaponButtonPressed_ = true;
+		}
+		if (glfwGetKey(window_, GLFW_KEY_TAB) == GLFW_RELEASE) {
+			cycleWeaponButtonPressed_ = false;
+		}
 	}
 	
 	void Game::ResizeCallback(GLFWwindow *window, int width, int height) {

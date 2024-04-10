@@ -2,6 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "playergameobject.h"
 #include "playerbulletgameobject.h"
+#include "playerblastbulletgameobject.h"
 
 namespace game {
 	PlayerGameObject::PlayerGameObject(const glm::vec3 &position, TextureManager *manager, int texture)
@@ -23,14 +24,28 @@ namespace game {
 	
 	ProjectileGameObject* PlayerGameObject::CreateProjectile() {
 		float bulletOffset = 0.5f;
+		glm::vec3 bulletPosition = position_ + glm::vec3(0.0f, bulletOffset, 0.0f);
 		ProjectileGameObject* bullet;
 		switch(currentWeapon_) {
 			case TORPEDO:
-				glm::vec3 bulletPosition = position_ + glm::vec3(0.0f, bulletOffset, 0.0f);
 				bullet = new PlayerBulletGameObject(bulletPosition, textureManager_, 1);
+				break;
+			case BLAST:
+				bullet = new PlayerBlastBulletGameObject(bulletPosition, textureManager_, 1);
 				break;
 		}
 		return bullet;
+	}
+	
+	void PlayerGameObject::CycleCurrentWeapon() {
+		switch(currentWeapon_) {
+			case TORPEDO:
+				currentWeapon_ = PlayerGameObject::BLAST;
+				break;
+			case BLAST:
+				currentWeapon_ = PlayerGameObject::TORPEDO;
+				break;
+		}
 	}
 	
 	void PlayerGameObject::OnCollisionWith(GameObject* other) {

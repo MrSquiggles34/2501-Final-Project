@@ -64,6 +64,8 @@ namespace game {
 
 			double lastPowerSpawnTime_ = 0.0;
 			double powerSpawnInterval_ = 29.0;
+			
+			bool cycleWeaponButtonPressed_ = false;
 
 			private:
 				void SpawnCoin() {

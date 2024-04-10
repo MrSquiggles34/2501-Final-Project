@@ -10,11 +10,14 @@ namespace game {
 			PlayerGameObject(const glm::vec3 &position, TextureManager *manager, int texture);
 			
 			enum Weapon {
-				TORPEDO
+				TORPEDO,
+				BLAST
 			};
 			
 			inline Weapon GetCurrentWeapon() const { return currentWeapon_; }
 			inline void SetCurrentWeapon(Weapon weapon) { currentWeapon_ = weapon; }
+			
+			void CycleCurrentWeapon();
 			
 			virtual ProjectileGameObject* CreateProjectile() override;
 			
