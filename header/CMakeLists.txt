@@ -27,4 +27,5 @@ target_sources(${PROJ_NAME}
 		heartgameobject.h
 		textgameobject.h
 		shootinggameobject.h
+		spawnergameobject.h
 )

@@ -5,7 +5,7 @@
 namespace game {
 	CollectableGameObject::CollectableGameObject(const glm::vec3& position, TextureManager* manager, int texture)
 		: GameObject(position, manager, texture), lifespanTimer_() {
-		lifespanTimer_.Start(10.0f);
+		lifespanTimer_.Start(20.0f);
 	} 
 
 	void CollectableGameObject::CollectObject(GameObject* other) {

@@ -87,6 +87,7 @@ namespace game {
 		powerUp_ = 0;
 		lives_ = 3;
 		weaponType_ = 1;
+
 	}
 	
 	void Game::Setup(void) {
@@ -101,19 +102,13 @@ namespace game {
 		std::cout << text->GetText() << std::endl;
 		gameObjects_.push_back(text);
 
-		gameObjects_.push_back(new EnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2));
+		gameObjects_.push_back(new ShooterEnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2, player_));
 
 		// This part is probably incorrect
 		GameObject *particles = new ParticleSystem(glm::vec3(-0.0f, 0.0f, 0.0f), &textureManager_, 3,player_);
 		float pi_over_two = glm::pi<float>() / 2.0f;
 		particles->SetDirection(-pi_over_two);
 		gameObjects_.push_back(particles);
-
-		gameObjects_.push_back(new CoinGameObject(glm::vec3(1.0f, 1.0f, 0.0f), &textureManager_, 4));
-
-		gameObjects_.push_back(new PowerUpGameObject(glm::vec3(2.0f, 1.0f, 0.0f), &textureManager_, 5));
-		
-		gameObjects_.push_back(new HeartGameObject(glm::vec3(-2.0f, 1.0f, 0.0f), &textureManager_, 6));
 	}
 	
 	void Game::SetTexture(GLuint w, const char *fname) {
@@ -198,6 +193,18 @@ namespace game {
 	void Game::Update(double delta_time) {
 		currentTime_ += delta_time;
 
+		// Spawn powerups periodically
+		if (currentTime_ - lastCoinSpawnTime_ >= coinSpawnInterval_) {
+			SpawnCoin();
+			lastCoinSpawnTime_ = currentTime_;
+		} else if (currentTime_ - lastPowerSpawnTime_ >= powerSpawnInterval_) {
+			SpawnPower();
+			lastPowerSpawnTime_ = currentTime_;
+		} else if (currentTime_ - lastHeartSpawnTime_ >= heartSpawnInterval_) {
+			SpawnHeart();
+			lastCoinSpawnTime_ = currentTime_;
+		}
+
 		// Iterate through gameObjects_
 		for (int i = 0; i < gameObjects_.size(); ++i) {
 			GameObject* currentGameObject = gameObjects_[i];
@@ -270,7 +277,7 @@ namespace game {
 			glfwSetWindowShouldClose(window_, true);
 		}
 		
-		float playerSpeed = 1.0f;
+		float playerSpeed = 20.0f;
 		
 		if (glfwGetKey(window_, GLFW_KEY_W) == GLFW_PRESS) {
 			player_->AddRelativeMotion(glm::vec3(playerSpeed, 0.0f, 0.0f));

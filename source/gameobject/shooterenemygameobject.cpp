@@ -3,7 +3,7 @@
 namespace game {
 	ShooterEnemyGameObject::ShooterEnemyGameObject(const glm::vec3 &position, TextureManager *manager, int texture, GameObject* target)
 	 : EnemyGameObject(position, manager, texture),
-	   ShootingGameObject(0.5, ShootingGameObject::ENEMY_BULLET) {
+	   ShootingGameObject(1000000, ShootingGameObject::ENEMY_BULLET) {
 		targetObj_ = target;
 		SetCollisionMaskInBit(GameObject::ENEMY_BODY_SHOOTER, true);
 	}
@@ -15,7 +15,7 @@ namespace game {
 			// Evasive maneuvers
 			motion.y = -deltaToTarget.y;
 		}
-		if (deltaToTarget.x < 8.0f) {
+		if (deltaToTarget.x < 1.0f) {
 			// If you're close on the horizontal, shoot.
 			SetIsShooting(true);
 		}
