@@ -10,6 +10,8 @@ namespace game {
 			
 			virtual void Update(double delta_time) override;
 			virtual void OnCollisionWith(GameObject* other) override;
+		protected:
+			glm::vec3 delta_;
 	};
 }
 

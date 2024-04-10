@@ -7,7 +7,8 @@
 namespace game {
 	GameObject::GameObject(const glm::vec3 &position, TextureManager* textureManager, int texture) {
 		position_ = position;
-		motion_ = glm::vec3(10.0f);
+		motion_ = glm::vec3(0.0f);
+		velocity_ = glm::vec3(0.0f);
 		staticMotion_ = glm::vec3(0.0f);
 		direction_ = 0.0f;
 		movementSpeed_ = 10.0f;

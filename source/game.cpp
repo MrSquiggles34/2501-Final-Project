@@ -95,7 +95,7 @@ namespace game {
 		std::cout << text->GetText() << std::endl;
 		gameObjects_.push_back(text);
 
-		gameObjects_.push_back(new ShooterEnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2, player_));
+		//gameObjects_.push_back(new ShooterEnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2, player_));
 
 		// This part is probably incorrect
 		GameObject *particles = new ParticleSystem(glm::vec3(-0.0f, 0.0f, 0.0f), &textureManager_, 3,player_);
@@ -205,6 +205,8 @@ namespace game {
 		}
 
 		// Iterate through gameObjects_
+		GameObject* background = gameObjects_.back();
+		
 		for (int i = 0; i < gameObjects_.size(); ++i) {
 			GameObject* currentGameObject = gameObjects_[i];
 
@@ -232,6 +234,7 @@ namespace game {
 
 			// Check if the current game object is marked for deletion and delete it if necessary
 			if (currentGameObject->IsMarkedForDeletion()) {
+				std::cout << "Deleting object #" << i << std::endl;
 				delete currentGameObject;
 				gameObjects_.erase(gameObjects_.begin() + i);
 				--i; // Decrement i to account for the removed object
