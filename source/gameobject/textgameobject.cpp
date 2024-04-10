@@ -4,17 +4,17 @@
 
 namespace game {
 
-TextGameObject::TextGameObject(const glm::vec3& position, TextureManager* textureManager, int texture) : GameObject(position, textureManager, texture) {
-
+TextGameObject::TextGameObject(const glm::vec3 &position, TextureManager* textureManager, int texture) : GameObject(position, textureManager, texture) {
     text_ = "";
+    scale_ = 4.0;
     texture_ = textureManager->GetTexture(texture);
     shader_ = texture_->getShader();
-    geometry_ = texture_->getGeometry();
-    scale_ = 4.0;
+    geom_ = texture_->getGeometry();
 }
 
 
-    void TextGameObject::Render(glm::mat4 view_matrix, double current_time) {
+    void TextGameObject::Render(const glm::mat4 &view_matrix) {
+
 
     // Set up the shader
     shader_->Enable();
@@ -38,7 +38,7 @@ TextGameObject::TextGameObject(const glm::vec3& position, TextureManager* textur
     shader_->SetUniformMat4("transformation_matrix", transformation_matrix);
 
     // Set up the geometry
-    geometry_->SetGeometry(shader_->GetShaderProgram());
+    geom_->SetGeometry(shader_->GetShaderProgram());
 
     // Bind the entity's texture
     glBindTexture(GL_TEXTURE_2D, texture_->getTexture());
@@ -60,7 +60,7 @@ TextGameObject::TextGameObject(const glm::vec3& position, TextureManager* textur
     shader_->SetUniformIntArray("text_content", final_size, data);
 
     // Draw the entity
-    glDrawElements(GL_TRIANGLES, geometry_->GetSize(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, geom_->GetSize(), GL_UNSIGNED_INT, 0);
 }
 
 
@@ -73,6 +73,6 @@ std::string TextGameObject::GetText(void) const {
 void TextGameObject::SetText(std::string text){
 
     text_ = text;
-}
+} 
 
 } // namespace game
