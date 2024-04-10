@@ -109,6 +109,12 @@ namespace game {
 		float pi_over_two = glm::pi<float>() / 2.0f;
 		particles->SetDirection(-pi_over_two);
 		gameObjects_.push_back(particles);
+
+		GameObject *background = new GameObject(glm::vec3(0.0f, 3.0f, 0.0f), &textureManager_, 8);
+		background->SetTileTexture(true);
+		background->SetScaleX(2);
+		background->SetTextureWrap(GL_REPEAT);
+		gameObjects_.push_back(background);
 	}
 	
 	void Game::SetTexture(GLuint w, const char *fname) {
@@ -137,8 +143,8 @@ namespace game {
 	
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
-		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png", "star.png", "heart.png", "font.png"};
-		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_, &spriteShader_, &spriteShader_, &textShader_};
+		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png", "star.png", "heart.png", "font.png", "water.png"};
+		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_, &spriteShader_, &spriteShader_, &textShader_, &spriteShader_};
 
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];

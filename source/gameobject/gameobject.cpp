@@ -97,4 +97,10 @@ namespace game {
 		direction_ = fmod(direction_, two_pi);
 		if (direction_ < 0) direction_ += two_pi;
 	}
+
+	void GameObject::SetTextureWrap(GLint wrap_mode) {
+		glBindTexture(GL_TEXTURE_2D, texture_->getTexture());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap_mode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap_mode);
+	}
 }

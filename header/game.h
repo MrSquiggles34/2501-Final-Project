@@ -4,7 +4,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <cstdlib> // For rand() and srand()
+#include <cstdlib> 
 #include <ctime>   
 
 #include "gameobject.h"

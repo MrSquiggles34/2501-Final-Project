@@ -1,31 +1,36 @@
-// Source code of fragment shader
-#version 130
-
-// Attributes passed from the vertex shader
 in vec4 color_interp;
 in vec2 uv_interp;
+
+// Uniform to indicate if the object is in "ghost" mode
+uniform bool is_ghost;
+
+// Uniform to indicate if the texture should be tiled
+uniform bool tile_texture;
 
 // Texture sampler
 uniform sampler2D onetex;
 
-uniform bool debug_mode;
-
 void main()
 {
-	// Sample texture
-	vec4 color;
-	if (debug_mode && (uv_interp.x == 0 || uv_interp.y == 0 || uv_interp.x == 1 || uv_interp.y == 1)) {
-		color = vec4(1.0, 1.0, 1.0, 1.0); // Highlight edges of render area
-	} else {
-		color = texture2D(onetex, uv_interp);
-	}
-	
-	// Assign color to fragment
-	gl_FragColor = vec4(color.r, color.g, color.b, color.a);
-	
-	// Check for transparency
-	if(color.a < 1.0)
-	{
-		 discard;
-	}
+    // Sample texture with or without tiling based on the tile_texture uniform
+    vec2 uv = uv_interp;
+    if (tile_texture) {
+        uv = uv_interp * 10; 
+    }
+    vec4 color = texture2D(onetex, uv); 
+
+    // Convert an object to gray if it is a ghost
+    if (is_ghost) {
+        float gray = dot(color.rgb, vec3(0.3, 0.6, 0.1));
+        color.rgb = vec3(gray);
+    } 
+
+    // Assign color to fragment
+    gl_FragColor = vec4(color.rgb, color.a);
+
+    // Check for transparency
+    if(color.a < 0.1)
+    {
+         discard;
+    }
 }

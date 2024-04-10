@@ -49,6 +49,8 @@ namespace game {
 			inline void SetDragFactor(float drag) { if (drag > 0 && drag < 1) dragFactor_ = drag; }
 			inline float GetDragFactor() const { return dragFactor_; }
 
+			void SetScaleX(float scaleX) { scale_ = scaleX; }
+
 
 			// Collision
 			inline void SetCollisionMaskIn(long int mask) { collisionMaskIn_ = mask; }
@@ -68,6 +70,10 @@ namespace game {
 			inline bool IsCollidingWith(GameObject* other) { return CanCollideWith(other) && IsIntersectingWith(other); }
 			virtual void OnCollisionWith(GameObject* other); // Outgoing
 			virtual void WhenCollidedBy(GameObject* other);  // Incoming
+
+			// Background 
+			inline void SetTileTexture(bool tile_texture) { tile_texture_ = tile_texture; }
+			void SetTextureWrap(GLint wrap_mode);
 			
 			enum CollisionBit {
 				PLAYER_BODY,
@@ -103,6 +109,8 @@ namespace game {
 			
 			// Texture & rendering stuff
 			float scale_;
+			float scaleX;
+			float scaleY;
 			TextureManager *textureManager_;
 			GameTexture *texture_;
 			Geometry *geom_;
@@ -125,6 +133,9 @@ namespace game {
 
 			// Deletion
 			bool markedForDeletion_;
+
+			// Background
+			bool tile_texture_ = false;
 	};
 }
 
