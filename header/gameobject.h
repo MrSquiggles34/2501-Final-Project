@@ -93,6 +93,8 @@ namespace game {
 			float scale_;
 			TextureManager *textureManager_;
 			GameTexture *texture_;
+			Geometry *geom_;
+			Shader *shader_;
 			
 			// Collision detection
 			long int collisionMaskIn_;  // What am I?

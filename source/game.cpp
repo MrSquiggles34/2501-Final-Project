@@ -86,14 +86,15 @@ namespace game {
 	
 	void Game::Setup(void) {
 		LoadAllTextures();
-		
-		// Set up text quad
-		TextGameObject* text = new TextGameObject(glm::vec3(0.0f, -2.0f, 0.0f), &textureManager_, 7);
-		text->SetText("Hello World!");
-		gameObjects_.push_back(text);
 
 		player_ = new PlayerGameObject(glm::vec3(0.0f, 0.0f, 0.0f), &textureManager_, 0);
 		gameObjects_.push_back(player_);
+
+		// Set up text quad
+		TextGameObject *text = new TextGameObject(glm::vec3(0.0f, -2.0f, 0.0f), &textureManager_, 7);
+		text->SetText("Hello World");
+		std::cout << text->GetText() << std::endl;
+		gameObjects_.push_back(text);
 
 		gameObjects_.push_back(new EnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2));
 

@@ -11,20 +11,17 @@ namespace game {
     class TextGameObject : public GameObject {
 
         public:
-            TextGameObject(const glm::vec3& position, TextureManager* textureManager, int texture);
+            TextGameObject(const glm::vec3 &position, TextureManager* textureManager, int texture);
 
             // Text to be displayed
             std::string GetText(void) const;
             void SetText(std::string text);
 
             // Render function for the text
-            void Render(const glm::mat4 view_matrix, double current_time);
+            void Render(const glm::mat4 &view_matrix) override;
 
         private:
             std::string text_;
-            GameTexture* texture_;
-            Shader* shader_;
-            Geometry* geometry_;
 
     }; // class TextGameObject
 
