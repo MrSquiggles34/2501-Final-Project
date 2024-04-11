@@ -24,7 +24,11 @@ ParticleSystem::ParticleSystem(const glm::vec3 &position, TextureManager* textur
 		glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), direction_, glm::vec3(0.0, 0.0, 1.0));;
 		glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), position_);
 		
-		glm::mat4 transform_matrix = translation_matrix * rotation_matrix * scaling_matrix;
+		glm::mat4 parent_rotation_matrix = glm::rotate(glm::mat4(1.0f), parent_->GetDirection(), glm::vec3(0.0, 0.0, 1.0));
+		glm::mat4 parent_translation_matrix = glm::translate(glm::mat4(1.0f), parent_->GetPosition());
+		glm::mat4 parent_transformation_matrix = parent_translation_matrix * parent_rotation_matrix;
+		
+		glm::mat4 transform_matrix = parent_transformation_matrix * translation_matrix * rotation_matrix * scaling_matrix;
 		
 		texture_->RenderSetup(view_matrix, transform_matrix);
 		shader_->SetUniform1f("time", current_time);
