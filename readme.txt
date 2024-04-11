@@ -1,3 +1,6 @@
+Developed on Windows and Linux
+Elliot LeGresley - 101238250
+
 Game Controls
 
 WASD for movement
