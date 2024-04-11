@@ -188,7 +188,12 @@ namespace game {
 	
 	void Game::Update(double delta_time) {
 		currentTime_ += delta_time;
-
+		
+		if (currentTime_ - lastEnemySpawnTime_ >= enemySpawnInterval_) {
+			SpawnEnemy();
+			lastEnemySpawnTime_ = currentTime_;
+		}
+		
 		// Spawn powerups periodically
 		if (currentTime_ - lastCoinSpawnTime_ >= coinSpawnInterval_) {
 			SpawnCoin();

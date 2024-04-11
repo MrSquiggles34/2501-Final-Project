@@ -13,6 +13,10 @@
 #include "coingameobject.h"
 #include "heartgameobject.h"
 #include "powerupgameobject.h"
+#include "hazardenemygameobject.h"
+#include "shooterenemygameobject.h"
+#include "chaserenemygameobject.h"
+#include "linearparametricmotion.h"
 #include "sprite.h"
 #include "shader.h"
 #include <vector>
@@ -65,6 +69,9 @@ namespace game {
 			double lastPowerSpawnTime_ = 0.0;
 			double powerSpawnInterval_ = 29.0;
 			
+			double lastEnemySpawnTime_ = 0.0;
+			double enemySpawnInterval_ = 8.0;
+			
 			bool cycleWeaponButtonPressed_ = false;
 
 			private:
@@ -90,6 +97,30 @@ namespace game {
 
 					PowerUpGameObject* power = new PowerUpGameObject(glm::vec3(posX, 8.0f, 0.0f), &textureManager_, 6);
 					gameObjects_.push_back(power);
+				}
+				
+				void SpawnEnemy() {
+					float posX = static_cast<float>((std::rand() % 600 - 300)) / 100.0f;
+					
+					int enemyType = (std::rand() % 3);
+					
+					EnemyGameObject* enemy;
+					glm::vec3 enemyPos(posX, 8.0f, 0.0f);
+					glm::vec3 motionVec;
+					
+					switch (enemyType) {
+						case 0: // Parametric Motion Enemy
+							motionVec = glm::normalize(glm::vec3(-2* posX, -16.0f, 0.0f));
+							enemy = new HazardEnemyGameObject(enemyPos, &textureManager_, 2, new LinearParametricMotion(motionVec));
+							break;
+						case 1: // Shooter Enemy
+							enemy = new ShooterEnemyGameObject(enemyPos, &textureManager_, 2, player_);
+							break;
+						case 2: // Chaser Enemy
+							enemy = new ChaserEnemyGameObject(enemyPos, &textureManager_, 2, player_);
+							break;
+					}
+					gameObjects_.push_back(enemy);
 				}
 	};
 }

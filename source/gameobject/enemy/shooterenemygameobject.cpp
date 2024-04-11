@@ -7,6 +7,7 @@ namespace game {
 	   ShootingGameObject(0.5, ShootingGameObject::ENEMY_BULLET) {
 		targetObj_ = target;
 		SetCollisionMaskInBit(GameObject::ENEMY_BODY_SHOOTER, true);
+		movementSpeed_ = 10.0f;
 	}
 	
 	void ShooterEnemyGameObject::Update(double delta_time) {
@@ -18,6 +19,8 @@ namespace game {
 		if (glm::length(deltaToTarget) < 3.0f) {
 			// Evasive maneuvers
 			motion.y = -deltaToTarget.y;
+		} else if (glm::abs(deltaToTarget.y) > 3.3f) {
+			motion.y = deltaToTarget.y;
 		}
 		if (deltaToTarget.x < 1.0f) {
 			// If you're close on the horizontal, shoot.
