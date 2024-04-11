@@ -62,7 +62,7 @@ namespace game {
 			lives_--;
 			if (lives_ <= 0) SetMarkedForDeletion(true);
 		} else if (other->GetCollisionMaskInBit(GameObject::COIN)) {
-			score_ += 1000;
+			score_ += 10;
 		} else if (other->GetCollisionMaskInBit(GameObject::HEART)) {
 			lives_++;
 		} else if (other->GetCollisionMaskInBit(GameObject::POWERUP)) {

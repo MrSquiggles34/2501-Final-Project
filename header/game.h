@@ -17,6 +17,7 @@
 #include "shooterenemygameobject.h"
 #include "chaserenemygameobject.h"
 #include "linearparametricmotion.h"
+#include "textgameobject.h"
 #include "sprite.h"
 #include "shader.h"
 #include <vector>
@@ -39,6 +40,8 @@ namespace game {
 			void HandleUserInput();
 			void Update(double delta_time);
 			void Render();
+
+			void UpdateHUDText();
 			
 			double currentTime_;
 			
@@ -58,6 +61,9 @@ namespace game {
 			
 			std::vector<GameObject*> gameObjects_;
 			PlayerGameObject* player_;
+			TextGameObject* livesHudText_;
+			TextGameObject* scoreHudText_;
+			TextGameObject* bulletHudText_;
 
 			// Spawning items (I'm sorry)
 			double lastCoinSpawnTime_ = 0.0; 
@@ -73,6 +79,8 @@ namespace game {
 			double enemySpawnInterval_ = 8.0;
 			
 			bool cycleWeaponButtonPressed_ = false;
+
+			
 
 			private:
 				void SpawnCoin() {

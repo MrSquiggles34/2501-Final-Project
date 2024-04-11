@@ -23,6 +23,7 @@
 #include "particles.h"
 #include "particlesystem.h"
 #include "textgameobject.h"
+using namespace std;
 
 namespace game {
 	const char *WINDOW_TITLE = "2501 Final Project";
@@ -90,16 +91,23 @@ namespace game {
 		gameObjects_.push_back(player_);
 
 		// Set up text quad
-		TextGameObject *text = new TextGameObject(glm::vec3(0.0f, -2.0f, 0.0f), &textureManager_, 7);
-		text->SetText("Hello World");
-		std::cout << text->GetText() << std::endl;
-		gameObjects_.push_back(text);
+		livesHudText_ = new TextGameObject(glm::vec3(-3.35f, 5.4f, 0.0f), &textureManager_, 7);
+		livesHudText_->SetText("Lives: 3");
+		gameObjects_.push_back(livesHudText_);
+
+		scoreHudText_ = new TextGameObject(glm::vec3(-3.35f, 4.2f, 0.0f), &textureManager_, 7);
+		scoreHudText_->SetText("Score: 10");
+		gameObjects_.push_back(scoreHudText_);
+
+		bulletHudText_ = new TextGameObject(glm::vec3(-3.35f, 3.0f, 0.0f), &textureManager_, 7);
+		bulletHudText_->SetText("Weapon A");
+		gameObjects_.push_back(bulletHudText_);
 
 		gameObjects_.push_back(new ChaserEnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2, player_));
 
-		GameObject *background = new GameObject(glm::vec3(0.0f, 3.0f, 0.0f), &textureManager_, 8);
+		GameObject *background = new GameObject(glm::vec3(0.0f, -5.0f, 0.0f), &textureManager_, 8);
 		background->SetTileTexture(true);
-		background->SetScaleX(2);
+		background->SetScaleX(8);
 		background->SetTextureWrap(GL_REPEAT);
 		gameObjects_.push_back(background);
 	}
@@ -188,6 +196,7 @@ namespace game {
 	
 	void Game::Update(double delta_time) {
 		currentTime_ += delta_time;
+		UpdateHUDText();
 		
 		if (currentTime_ - lastEnemySpawnTime_ >= enemySpawnInterval_) {
 			SpawnEnemy();
@@ -198,12 +207,16 @@ namespace game {
 		if (currentTime_ - lastCoinSpawnTime_ >= coinSpawnInterval_) {
 			SpawnCoin();
 			lastCoinSpawnTime_ = currentTime_;
-		} else if (currentTime_ - lastPowerSpawnTime_ >= powerSpawnInterval_) {
+		} 
+		
+		if (currentTime_ - lastPowerSpawnTime_ >= powerSpawnInterval_) {
 			SpawnPower();
 			lastPowerSpawnTime_ = currentTime_;
-		} else if (currentTime_ - lastHeartSpawnTime_ >= heartSpawnInterval_) {
+		} 
+		
+		if (currentTime_ - lastHeartSpawnTime_ >= heartSpawnInterval_) {
 			SpawnHeart();
-			lastCoinSpawnTime_ = currentTime_;
+			lastHeartSpawnTime_ = currentTime_;
 		}
 
 		// Iterate through gameObjects_
@@ -266,7 +279,6 @@ namespace game {
 			player_->AddRelativeMotion(glm::vec3(0.0f, playerSpeed, 0.0f));
 		}
 		if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS && player_->GetCanShoot(glfwGetTime())) {
-			std::cout << "fired " << std::endl;
 			player_->SetIsShooting(true);
 		}
 		if (!cycleWeaponButtonPressed_ && glfwGetKey(window_, GLFW_KEY_TAB) == GLFW_PRESS) {
@@ -280,5 +292,24 @@ namespace game {
 	
 	void Game::ResizeCallback(GLFWwindow *window, int width, int height) {
 		glViewport(0, 0, width, height);
+	}
+
+	void Game::UpdateHUDText() {
+		// Update HUD text to display remaining lives
+		int lives = player_->GetLives();
+		if (lives > 0) {
+			std::string livesText = "Lives: " + std::to_string(player_->GetLives());
+			livesHudText_->SetText(livesText);
+			std::string scoreText = "Score: " + std::to_string(player_->GetScore());
+			scoreHudText_->SetText(scoreText);
+			std::string weaponText = "Weapon: " + std::to_string(player_->GetCurrentWeapon() + 1);
+			bulletHudText_->SetText(weaponText);
+		}
+		else {
+			livesHudText_->SetText("Lives: 0");
+		}
+		
+
+		
 	}
 }

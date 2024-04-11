@@ -6,7 +6,7 @@ namespace game {
 
 TextGameObject::TextGameObject(const glm::vec3 &position, TextureManager* textureManager, int texture) : GameObject(position, textureManager, texture) {
 	text_ = "";
-	scale_ = 4.0;
+	scale_ = 1.3;
 	texture_ = textureManager->GetTexture(texture);
 	shader_ = texture_->GetShader();
 }
