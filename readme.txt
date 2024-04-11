@@ -1,5 +1,8 @@
+Ssssspaceships on a Lake
 Developed on Windows and Linux
+
 Elliot LeGresley - 101238250
+Andy Li - 101264096
 
 Game Controls
 
