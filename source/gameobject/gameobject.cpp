@@ -76,7 +76,9 @@ namespace game {
 		
 		glm::mat4 transform_matrix = translation_matrix * rotation_matrix * scaling_matrix;
 
-		texture_->Render(view_matrix, transform_matrix);
+		texture_->RenderSetup(view_matrix, transform_matrix);
+		texture_->GetShader()->SetUniformBool("tile_texture", tile_texture_);
+		texture_->RenderDraw();
 	}
 	
 	glm::vec3 GameObject::GetHeading() const {
