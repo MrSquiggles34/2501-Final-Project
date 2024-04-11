@@ -22,7 +22,7 @@ Design Requirements
  - At least 3 different enemy types: A "shooter" enemy, that attacks from a distance; a "chaser" enemy that tries to get close to you, then explodes; and a "hazard" enemy that makes its way across the screen, acting as an environmental challenge.
  - Two different weapons: A long range torpedo and a short-range "blast" weapon.
  - Collectibles: A 5s invincibility powerup, a score boosting coin, and an extra life heart.
-
+ - User interface HUD showing important information such as health, score, and weapon type.
 
 Technical Requirements
 
@@ -31,3 +31,4 @@ Technical Requirements
  - Collision detection between game objects: Yup. This is handled by GameObject::IsCollidingWith(), GameObject::OnCollisionWith(), and their related functions. The gameobjects use two bitmasks to determine both what the object *is* (from a collisions perspective), and what the object collides with.
  - At least two instances of particle systems: The "chase" enemy and secondary weapon both use particle systems to display.
  - Advanced methods: Steering behaviours: Not sure if this counts, but the ShooterEnemyGameObject has a fairly complex AI for what it does. It will attempt to pursue the player, but remain at least a certain distance away from you, fleeing if you get closer.
+ - A game world obtained through texture tiling rather than just a background or single sprite.
