@@ -75,7 +75,7 @@ namespace game {
 		glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), position_);
 		
 		glm::mat4 transform_matrix = translation_matrix * rotation_matrix * scaling_matrix;
-		
+
 		texture_->Render(view_matrix, transform_matrix);
 	}
 	

@@ -117,6 +117,10 @@ namespace game {
         glUniformMatrix4fv(glGetUniformLocation(shader_program_, name), 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
+    void Shader::SetUniformBool(const std::string& name, bool value) {
+    glUniform1i(glGetUniformLocation(shader_program_, name.c_str()), (int)value);
+}
+
 
     void Shader::SetUniformIntArray(const GLchar* name, int len, const GLint* data)
     {

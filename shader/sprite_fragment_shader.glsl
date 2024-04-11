@@ -18,7 +18,7 @@ void main()
     // Sample texture with or without tiling based on the tile_texture uniform
     vec2 uv = uv_interp;
     if (tile_texture) {
-        uv = uv_interp * 10; 
+        uv = uv_interp * 2; 
     }
     vec4 color = texture2D(onetex, uv); 
 

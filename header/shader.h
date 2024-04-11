@@ -4,6 +4,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <string>
 
 namespace game {
 
@@ -44,6 +45,8 @@ namespace game {
 
 			// Get OpenGL reference of shader program
 			inline GLuint GetShaderProgram(void) const { return shader_program_; }
+
+			void SetUniformBool(const std::string& name, bool value);
 
 		private:
 			// Reference to shader program
