@@ -7,12 +7,13 @@ in vec2 uv_interp;
 
 // Texture sampler
 uniform sampler2D onetex;
+uniform vec3 target_color;
 
 void main()
 {
     // Sample texture
     vec4 color = texture2D(onetex, uv_interp);
-    color.rgb = vec3(0.8, 0.4, 0.01) * color_interp.r;
+    color.rgb = target_color * color_interp.r;
 
     // Assign color to fragment
     gl_FragColor = vec4(color.r, color.g, color.b, color.a);

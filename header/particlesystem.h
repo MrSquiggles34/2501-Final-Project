@@ -10,7 +10,7 @@ namespace game {
 	class ParticleSystem : public GameObject {
 
 		public:
-			ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent);
+			ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent, const glm::vec3 &target_colour);
 
 			void Update(double delta_time) override;
 
@@ -21,6 +21,7 @@ namespace game {
 			GameTexture* texture_;
 			Shader* shader_;
 			Timer lifespanTimer_;
+			glm::vec3 targetCol_;
 
 	}; // class ParticleSystem
 

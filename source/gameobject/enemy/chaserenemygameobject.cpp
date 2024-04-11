@@ -2,7 +2,7 @@
 
 namespace game {
 	ChaserEnemyGameObject::ChaserEnemyGameObject(const glm::vec3 &position, TextureManager* manager, int texture, GameObject* target)
-	 : EnemyGameObject(position, manager, texture), explosionParticles_(glm::vec3(0.0f, 0.0f, 0.0f), manager, 3, this) {
+	 : EnemyGameObject(position, manager, texture), explosionParticles_(glm::vec3(0.0f, 0.0f, 0.0f), manager, 3, this, glm::vec3(0.8, 0.4, 0.01)) {
 		targetObj_ = target;
 		SetCollisionMaskInBit(GameObject::ENEMY_BODY_CHASER, true);
 		explosionParticles_.SetScaleX(0.25f);

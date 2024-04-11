@@ -6,11 +6,12 @@
 
 namespace game {
 
-ParticleSystem::ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent)
+ParticleSystem::ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent, const glm::vec3 &target_colour)
 	: GameObject(position, textureManager, texture), lifespanTimer_() {
 	parent_ = parent;
 	texture_ = textureManager->GetTexture(texture);
 	shader_ = texture_->GetShader();
+	targetCol_ = target_colour;
 }
 
 	void ParticleSystem::Update(double delta_time) {
@@ -32,6 +33,7 @@ ParticleSystem::ParticleSystem(const glm::vec3 &position, TextureManager* textur
 		
 		texture_->RenderSetup(view_matrix, transform_matrix);
 		shader_->SetUniform1f("time", current_time);
+		shader_->SetUniform3f("target_color", targetCol_);
 		texture_->RenderDraw();
 	}
 } // namespace game

@@ -7,7 +7,7 @@
 namespace game {
 	PlayerGameObject::PlayerGameObject(const glm::vec3 &position, TextureManager *manager, int texture)
 	 : GameObject(position, manager, texture),
-	   ShootingGameObject(0.5, ShootingGameObject::PLAYER_BULLET) {
+	   ShootingGameObject(0.5, ShootingGameObject::PLAYER_BULLET), powerupTimer_() {
 		movementSpeed_ = 1.0f;
 		direction_ = glm::pi<float>() / 2.0f;
 		width_ = 0.2f;
@@ -31,7 +31,7 @@ namespace game {
 				bullet = new PlayerBulletGameObject(bulletPosition, textureManager_, 1);
 				break;
 			case BLAST:
-				bullet = new PlayerBlastBulletGameObject(bulletPosition, textureManager_, -1);
+				bullet = new PlayerBlastBulletGameObject(bulletPosition, textureManager_, 1);
 				break;
 		}
 		return bullet;
@@ -48,10 +48,17 @@ namespace game {
 		}
 	}
 	
+	void PlayerGameObject::Update(double delta_time) {
+		powerupTimer_.Update(delta_time);
+		if (powerupTimer_.Finished()) {
+			powerup_ = 0; // Remove all powerups when timer finished
+		}
+		GameObject::Update(delta_time);
+	}
+	
 	void PlayerGameObject::OnCollisionWith(GameObject* other) {
 		if (other->GetCollisionMaskInBit(GameObject::TEAM_ENEMY)) {
 			if (IsPowerupApplied(Powerup::INVINCIBILITY)) return; // No effects from colliding with enemies when invincible.
-			
 			lives_--;
 			if (lives_ <= 0) SetMarkedForDeletion(true);
 		} else if (other->GetCollisionMaskInBit(GameObject::COIN)) {
@@ -65,6 +72,6 @@ namespace game {
 	
 	void PlayerGameObject::ApplyPowerup(Powerup power) {
 		powerup_ = SetMaskBit(powerup_, power, true);
-		
+		powerupTimer_.Start(5.0);
 	}
 }

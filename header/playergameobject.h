@@ -9,6 +9,8 @@ namespace game {
 		public:
 			PlayerGameObject(const glm::vec3 &position, TextureManager *manager, int texture);
 			
+			virtual void Update(double delta_time) override;
+			
 			enum Weapon {
 				TORPEDO,
 				BLAST
@@ -46,6 +48,7 @@ namespace game {
 			Weapon currentWeapon_ = TORPEDO;
 			int powerup_ = 0;
 			int score_ = 0;
+			Timer powerupTimer_;
 	};
 }
 
