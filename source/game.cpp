@@ -95,11 +95,12 @@ namespace game {
 		std::cout << text->GetText() << std::endl;
 		gameObjects_.push_back(text);
 
-		//gameObjects_.push_back(new ShooterEnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2, player_));
+		gameObjects_.push_back(new ChaserEnemyGameObject(glm::vec3(-1.0f, 1.0f, 0.0f), &textureManager_ , 2, player_));
 
 		// This part is probably incorrect
 		GameObject *particles = new ParticleSystem(glm::vec3(-0.0f, 0.0f, 0.0f), &textureManager_, 3,player_);
 		float pi_over_two = glm::pi<float>() / 2.0f;
+		particles->SetScaleX(0.2f);
 		particles->SetDirection(-pi_over_two);
 		gameObjects_.push_back(particles);
 

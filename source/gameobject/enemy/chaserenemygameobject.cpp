@@ -18,7 +18,7 @@ namespace game {
 			}
 		} else if (explosionCountdown_ > 0.0) {
 			glm::vec3 towardsTarget = targetObj_->GetPosition() - position_;
-			if (glm::length(towardsTarget) < 8.0f) {
+			if (glm::length(towardsTarget) < 1.0f) {
 				explosionState_ = 1;
 			} else {
 				AddMotion(towardsTarget);
@@ -30,6 +30,8 @@ namespace game {
 	void ChaserEnemyGameObject::Explode() {
 		explosionState_ = 2;
 		dragFactor_ = 0.0; // Stops all motion.
+		//SetScaleX(0.4f);
+		SetTexture(3); // Switch to explosion sprite
 		SetCollisionMaskOutBit(GameObject::PLAYER_BULLET, false); // Can no longer get shot
 		SetCollisionMaskInBit(GameObject::ENEMY_BODY, false); // Treat the exploding enemy as a bullet.
 		SetCollisionMaskInBit(GameObject::ENEMY_BULLET, true);

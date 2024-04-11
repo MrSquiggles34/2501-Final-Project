@@ -31,7 +31,7 @@ namespace game {
 				bullet = new PlayerBulletGameObject(bulletPosition, textureManager_, 1);
 				break;
 			case BLAST:
-				bullet = new PlayerBlastBulletGameObject(bulletPosition, textureManager_, 1);
+				bullet = new PlayerBlastBulletGameObject(bulletPosition, textureManager_, -1);
 				break;
 		}
 		return bullet;
