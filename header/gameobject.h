@@ -14,7 +14,7 @@ namespace game {
 			GameObject(const glm::vec3 &position, TextureManager* textureManager, int texture);
 			
 			virtual void Update(double delta_time);
-			virtual void Render(const glm::mat4 &view_matrix);
+			virtual void Render(const glm::mat4 &view_matrix, double current_time);
 			
 			inline glm::vec3 GetPosition() const { return position_; }
 			inline glm::vec3 GetVelocity() const { return velocity_; }

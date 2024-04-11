@@ -68,7 +68,7 @@ namespace game {
 	
 	void GameObject::OnCollisionWith(GameObject* other) {}
 	
-	void GameObject::Render(const glm::mat4 &view_matrix) {
+	void GameObject::Render(const glm::mat4 &view_matrix, double current_time) {
 		if (texture_ == nullptr) return; // Invisible Object
 		glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(scale_, scale_, 1.0));;
 		glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), direction_, glm::vec3(0.0, 0.0, 1.0));;
@@ -77,7 +77,6 @@ namespace game {
 		glm::mat4 transform_matrix = translation_matrix * rotation_matrix * scaling_matrix;
 		
 		texture_->Render(view_matrix, transform_matrix);
-
 	}
 	
 	glm::vec3 GameObject::GetHeading() const {
@@ -100,7 +99,7 @@ namespace game {
 	}
 
 	void GameObject::SetTextureWrap(GLint wrap_mode) {
-		glBindTexture(GL_TEXTURE_2D, texture_->getTexture());
+		glBindTexture(GL_TEXTURE_2D, texture_->GetTexture());
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap_mode);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap_mode);
 	}

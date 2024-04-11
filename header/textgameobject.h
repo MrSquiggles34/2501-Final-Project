@@ -7,23 +7,24 @@
 
 namespace game {
 
-    // Inherits from GameObject
-    class TextGameObject : public GameObject {
+	// Inherits from GameObject
+	class TextGameObject : public GameObject {
 
-        public:
-            TextGameObject(const glm::vec3 &position, TextureManager* textureManager, int texture);
+		public:
+			TextGameObject(const glm::vec3 &position, TextureManager* textureManager, int texture);
 
-            // Text to be displayed
-            std::string GetText(void) const;
-            void SetText(std::string text);
+			// Text to be displayed
+			std::string GetText(void) const;
+			void SetText(std::string text);
 
-            // Render function for the text
-            void Render(const glm::mat4 &view_matrix) override;
+			// Render function for the text
+			void Render(const glm::mat4 &view_matrix, double current_time) override;
 
-        private:
-            std::string text_;
+		private:
+			std::string text_;
+			Shader* shader_;
 
-    }; // class TextGameObject
+	}; // class TextGameObject
 
 } // namespace game
 

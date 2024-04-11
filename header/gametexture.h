@@ -13,10 +13,12 @@ namespace game {
 		public:
 			GameTexture(Geometry *geom, Shader *shader, GLuint texture);
 			void Render(const glm::mat4 &view_matrix, const glm::mat4 &transform_matrix);
+			void RenderSetup(const glm::mat4 &view_matrix, const glm::mat4 &transform_matrix);
+			void RenderDraw();
 
-			Shader* getShader() { return shader_; }
-			Geometry* getGeometry() { return geometry_; }
-			GLuint getTexture() { return texture_; }
+			Shader* GetShader() { return shader_; }
+			Geometry* GetGeometry() { return geometry_; }
+			GLuint GetTexture() { return texture_; }
 		protected:
 			Geometry *geometry_;
 			Shader *shader_;

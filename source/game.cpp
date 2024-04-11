@@ -137,14 +137,17 @@ namespace game {
 	void Game::LoadAllTextures() {
 		const char* textureDir = "/assets/img/";
 		const char* textures[] = {"player.png", "bullet.png", "destroyer_green.png", "orb.png", "coin.png", "star.png", "heart.png", "font.png", "water.png"};
-		Shader* shaders[] = { &spriteShader_, &spriteShader_, &spriteShader_, &particleShader_, &spriteShader_, &spriteShader_, &spriteShader_, &textShader_, &spriteShader_};
+		
+		int geomShaderMode[] = {0, 0, 0, 2, 0, 0, 0, 1, 0};
+		Shader* shaders[] = { &spriteShader_, &textShader_, &particleShader_};
+		Geometry* geometries[] = { sprite_, sprite_, particles_};
 
 		int numTextures = (sizeof(textures) / sizeof(char*));
 		tex_ = new GLuint[numTextures];
 		glGenTextures(numTextures, tex_);
 		for (int i = 0; i < numTextures; i++){
 			SetTexture(tex_[i], (RESOURCES_DIR + std::string(textureDir) + std::string(textures[i])).c_str());
-			textureManager_.AddTexture(sprite_, shaders[i], tex_[i]);
+			textureManager_.AddTexture(geometries[geomShaderMode[i]], shaders[geomShaderMode[i]], tex_[i]);
 		}
 		glBindTexture(GL_TEXTURE_2D, tex_[0]);
 	} // LoadAllTextures
@@ -185,7 +188,7 @@ namespace game {
 		glm::mat4 view_matrix = window_scale_matrix * camera_zoom_matrix;
 		
 		for (int i = 0; i < gameObjects_.size(); i++) {
-			gameObjects_[i]->Render(view_matrix);
+			gameObjects_[i]->Render(view_matrix, currentTime_);
 		}
 	} // Render
 	

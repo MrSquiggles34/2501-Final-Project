@@ -6,24 +6,23 @@
 
 namespace game {
 
-    // Inherits from GameObject
-    class ParticleSystem : public GameObject {
+	// Inherits from GameObject
+	class ParticleSystem : public GameObject {
 
-        public:
-            ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent);
+		public:
+			ParticleSystem(const glm::vec3 &position, TextureManager* textureManager, int texture, GameObject *parent);
 
-            void Update(double delta_time) override;
+			void Update(double delta_time) override;
 
-            void Render(glm::mat4 view_matrix, double current_time);
+			void Render(const glm::mat4 &view_matrix, double current_time);
 
-        private:
-            GameObject *parent_;
-            GameTexture* texture_;
-            Shader* shader_;
-            Geometry* geometry_;
-            Timer lifespanTimer_;
+		private:
+			GameObject *parent_;
+			GameTexture* texture_;
+			Shader* shader_;
+			Timer lifespanTimer_;
 
-    }; // class ParticleSystem
+	}; // class ParticleSystem
 
 } // namespace game
 
